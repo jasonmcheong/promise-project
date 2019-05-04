@@ -26,7 +26,7 @@ class CarouselViewAdd extends React.Component {
                 const answerList = answers_additional.map(({ answer_additional }) => {
                     return (
                         <button
-                            className="button"
+                            className="carousel-button"
                             key={answer_additional}
                             value={answer_additional}
                             onClick={e =>
@@ -47,13 +47,15 @@ class CarouselViewAdd extends React.Component {
 
                 return (
                     <Carousel.Item key={title_additional}>
-                        <h2>{title_additional}</h2>
-                        <p>{information_additional}</p>
-                        <div className="button-group">
-                            <p>{question_additional}</p>
-                            <div>{answerList}</div>
+                        <h2 className="carousel-title">{title_additional}</h2>
+                        <div className="carousel-container">
+                            <p>{information_additional}</p>
+                            <div>
+                                <p className="carousel-question">{question_additional}</p>
+                                <div className="carousel-button-group">{answerList}</div>
+                            </div>
+                            <p>{more_information_additional}</p>
                         </div>
-                        <p>{more_information_additional}</p>
                     </Carousel.Item>
                 );
             }
@@ -73,6 +75,7 @@ class CarouselViewAdd extends React.Component {
                 onSelect={this.handleSelect}
                 slide={false}
                 wrap={false}
+                className="Carousel"
             >
                 {questionList}
             </Carousel>
