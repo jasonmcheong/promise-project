@@ -37,7 +37,7 @@ class CarouselView extends React.Component {
 
             return (
                 <Carousel.Item key={title}>
-                    <h1>{title}</h1>
+                    <h2>{title}</h2>
                     <p>{information}</p>
                     <div className="button-group">
                         <p>{question}</p>

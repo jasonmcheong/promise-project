@@ -1,9 +1,20 @@
 import React from 'react';
+import ThankYouEnd from './ThankYouEnd';
+import CarouselViewAdd from './CarouselViewAdd';
 
 class ThankYou extends React.Component {
     state = {
+        questionsAdditional: [],
         userChoice: '',
     };
+
+    componentWillMount() {
+        fetch('http://ea-mondo.org/wp-json/wp/v2/promise_questions_ad')
+            .then(res => res.json())
+            .then(data => {
+                data.map(res => this.setState({ questionsAdditional: res.acf.promise_additional_questions }));
+            });
+    }
 
     handleClick = e => {
         this.setState({ userChoice: e.target.value });
@@ -32,19 +43,13 @@ class ThankYou extends React.Component {
                 </div>
             );
         } else if (this.state.userChoice === 'Yes') {
-            return (
-                <div>
-                    this
-                    <p />
-                </div>
+            return this.state.questionsAdditional.length > 0 ? (
+                <CarouselViewAdd questions={this.state.questionsAdditional} />
+            ) : (
+                <h1>Loading</h1>
             );
         } else if (this.state.userChoice === 'No') {
-            return (
-                <div>
-                    No
-                    <p />
-                </div>
-            );
+            return <ThankYouEnd />;
         }
     }
 }
