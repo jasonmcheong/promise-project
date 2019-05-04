@@ -1,0 +1,44 @@
+.Carousel {
+    font-family: 'Muli', sans-serif;
+    font-size: 1.2rem;
+    width: 680px;
+    margin: 0 auto;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 10px 12px 15px #232323;
+}
+
+.carousel-container {
+    padding: 15px;
+}
+
+.carousel-title {
+    background: #000;
+    border-radius: 5px 5px 0 0;
+    padding: 10px 15px;
+    color: #fff;
+    font-weight: 400;
+}
+
+.carousel-question {
+    font-weight: bold;
+}
+.carousel-button-group {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.carousel-button {
+    font-size: 1.1rem;
+    width: 49%;
+    color: #fff;
+    background: #067a08;
+    border: none;
+    border-radius: 5px;
+    padding: 20px 25px;
+    margin: 5px 0;
+}
+.carousel-button:hover {
+    cursor: pointer;
+    background: #23a326;
+}

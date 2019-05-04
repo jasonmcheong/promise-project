@@ -1,5 +1,6 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import '../styles/Carousel.css';
 import UserForm from './UserForm';
 
 class CarouselView extends React.Component {
@@ -19,7 +20,7 @@ class CarouselView extends React.Component {
             const answerList = answers.map(({ answer }) => {
                 return (
                     <button
-                        className="button"
+                        className="carousel-button"
                         key={answer}
                         value={answer}
                         onClick={e =>
@@ -37,11 +38,13 @@ class CarouselView extends React.Component {
 
             return (
                 <Carousel.Item key={title}>
-                    <h2>{title}</h2>
-                    <p>{information}</p>
-                    <div className="button-group">
-                        <p>{question}</p>
-                        <div>{answerList}</div>
+                    <h2 className="carousel-title">{title}</h2>
+                    <div className="carousel-container">
+                        <p>{information}</p>
+                        <div>
+                            <p className="carousel-question">{question}</p>
+                            <div className="carousel-button-group">{answerList}</div>
+                        </div>
                     </div>
                 </Carousel.Item>
             );
@@ -61,6 +64,7 @@ class CarouselView extends React.Component {
                 onSelect={this.handleSelect}
                 slide={false}
                 wrap={false}
+                className="Carousel"
             >
                 {questionList}
             </Carousel>
