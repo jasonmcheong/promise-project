@@ -1,6 +1,8 @@
 import React from 'react';
 
 const ThankYouEnd = () => {
+    const handleSubmit = e => {};
+
     return (
         <div>
             <h2>Thanks again</h2>
@@ -17,7 +19,9 @@ const ThankYouEnd = () => {
                 <li>and/or the website of the World Esperanto Association: uea.org</li>
             </ul>
 
-            <button>Back to start</button>
+            <form onSubmit={handleSubmit}>
+                <button>Back to start</button>
+            </form>
         </div>
     );
 };

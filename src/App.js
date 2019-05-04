@@ -1,6 +1,5 @@
 import React from 'react';
 import CarouselView from './components/CarouselView.js';
-import ThankYou from './components/ThankYou.js';
 
 class App extends React.Component {
     state = {
@@ -18,8 +17,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                {/* {this.state.questions.length > 0 ? <CarouselView questions={this.state.questions} /> : <h1>Loading</h1>} */}
-                <ThankYou />
+                {this.state.questions.length > 0 ? <CarouselView questions={this.state.questions} /> : <h1>Loading</h1>}
             </div>
         );
     }
