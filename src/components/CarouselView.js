@@ -4,21 +4,19 @@ import Carousel from 'react-bootstrap/Carousel';
 class CarouselView extends React.Component {
     state = {
         index: 0,
-        direction: null,
-    };
-
-    handleSelect = (selectedIndex, e) => {
-        this.setState({
-            index: selectedIndex,
-            direction: e.direction,
-        });
     };
 
     render() {
         const questionList = this.props.questions.map(({ title, information, question, answers }) => {
             const answerList = answers.map(({ answer }) => {
                 return (
-                    <button key={answer} onClick={() => this.setState({ index: index + 1 })}>
+                    <button
+                        className="button"
+                        key={answer}
+                        onClick={() =>
+                            this.state.index < this.props.questions.length - 1 && this.setState({ index: index + 1 })
+                        }
+                    >
                         {answer}
                     </button>
                 );
@@ -26,9 +24,14 @@ class CarouselView extends React.Component {
 
             return (
                 <Carousel.Item key={title}>
+                    {this.state.index > 0 && (
+                        <button className="button" onClick={() => this.setState({ index: index - 1 })}>
+                            Previous Question
+                        </button>
+                    )}
                     <h1>{title}</h1>
                     <p>{information}</p>
-                    <div>
+                    <div className="button-group">
                         <p>{question}</p>
                         <div>{answerList}</div>
                     </div>
@@ -36,18 +39,16 @@ class CarouselView extends React.Component {
             );
         });
 
-        const { index, direction } = this.state;
+        const { index } = this.state;
 
         return (
             <Carousel
                 activeIndex={index}
-                direction={direction}
-                controls={true}
+                controls={false}
                 fade={true}
                 indicators={false}
                 interval={null}
                 keyboard={false}
-                onSelect={this.handleSelect}
                 slide={false}
                 wrap={false}
             >
