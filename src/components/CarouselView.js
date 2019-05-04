@@ -1,10 +1,18 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import UserForm from './UserForm';
 
 class CarouselView extends React.Component {
     state = {
         index: 0,
+        userInput: [],
     };
+
+    handleSelect(selectedIndex) {
+        this.setState({
+            index: selectedIndex,
+        });
+    }
 
     render() {
         const questionList = this.props.questions.map(({ title, information, question, answers }) => {
@@ -13,8 +21,13 @@ class CarouselView extends React.Component {
                     <button
                         className="button"
                         key={answer}
-                        onClick={() =>
-                            this.state.index < this.props.questions.length - 1 && this.setState({ index: index + 1 })
+                        value={answer}
+                        onClick={e =>
+                            this.state.index < this.props.questions.length &&
+                            this.setState({
+                                index: index + 1,
+                                userInput: [...this.state.userInput, `${title} - ${e.target.value}`],
+                            })
                         }
                     >
                         {answer}
@@ -24,11 +37,6 @@ class CarouselView extends React.Component {
 
             return (
                 <Carousel.Item key={title}>
-                    {this.state.index > 0 && (
-                        <button className="button" onClick={() => this.setState({ index: index - 1 })}>
-                            Previous Question
-                        </button>
-                    )}
                     <h1>{title}</h1>
                     <p>{information}</p>
                     <div className="button-group">
@@ -40,8 +48,9 @@ class CarouselView extends React.Component {
         });
 
         const { index } = this.state;
+        const q = this.props.questions;
 
-        return (
+        return index < q.length ? (
             <Carousel
                 activeIndex={index}
                 controls={false}
@@ -49,11 +58,14 @@ class CarouselView extends React.Component {
                 indicators={false}
                 interval={null}
                 keyboard={false}
+                onSelect={this.handleSelect}
                 slide={false}
                 wrap={false}
             >
                 {questionList}
             </Carousel>
+        ) : (
+            <UserForm />
         );
     }
 }
