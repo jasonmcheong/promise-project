@@ -1,5 +1,6 @@
 import React from 'react';
 import './styles/App.css';
+import './styles/index.css';
 import CarouselView from './components/CarouselView.js';
 import Loading from './components/Loading.js';
 

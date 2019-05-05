@@ -1,6 +1,7 @@
 import React from 'react';
 import ThankYouEnd from './ThankYouEnd';
 import CarouselViewAdd from './CarouselViewAdd';
+import Loading from './Loading';
 
 class ThankYou extends React.Component {
     state = {
@@ -23,30 +24,36 @@ class ThankYou extends React.Component {
     render() {
         if (this.state.userChoice === '') {
             return (
-                <div>
-                    <h2>Thank You</h2>
-                    <p>Expect a welcome email within 48 hours, then future contact in accordance with your wishes.</p>
-                    <p>
-                        If you are interested, we have three optional questions to help us with Strategy. Are you
-                        willing to answer the optional questions?
-                    </p>
-                    <button onClick={this.handleClick} value="Yes">
-                        Yes
-                    </button>
-                    <button onClick={this.handleClick} value="No">
-                        No
-                    </button>
-                    <p>For more information visit:</p>
-                    <p>the main English language website of Esperanto Antaŭen at ea-mondo.org</p>
-                    <p>the website of the Canadian Esperanto Association esperanto.ca</p>
-                    <p>and/or the website of the World Esperanto Association uea.org</p>
+                <div className="Component">
+                    <h2 className="component-title">Thank You</h2>
+                    <div className="component-container">
+                        <p>
+                            Expect a welcome email within 48 hours, then future contact in accordance with your wishes.
+                        </p>
+                        <p className="component-question">
+                            If you are interested, we have three optional questions to help us with Strategy. Are you
+                            willing to answer the optional questions?
+                        </p>
+                        <div className="button-grouper">
+                            <button className="button" onClick={this.handleClick} value="Yes">
+                                Yes
+                            </button>
+                            <button className="button" onClick={this.handleClick} value="No">
+                                No
+                            </button>
+                        </div>
+                        <p>For more information visit:</p>
+                        <p>the main English language website of Esperanto Antaŭen at ea-mondo.org</p>
+                        <p>the website of the Canadian Esperanto Association esperanto.ca</p>
+                        <p>and/or the website of the World Esperanto Association uea.org</p>
+                    </div>
                 </div>
             );
         } else if (this.state.userChoice === 'Yes') {
             return this.state.questionsAdditional.length > 0 ? (
                 <CarouselViewAdd questions={this.state.questionsAdditional} />
             ) : (
-                <h1>Loading</h1>
+                <Loading />
             );
         } else if (this.state.userChoice === 'No') {
             return <ThankYouEnd />;

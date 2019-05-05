@@ -1,4 +1,8 @@
-.Carousel {
+.Form {
+    padding: 0 2%;
+}
+
+.Component {
     font-family: 'Muli', sans-serif;
     font-size: 1.2rem;
     width: 680px;
@@ -8,11 +12,11 @@
     box-shadow: 10px 12px 15px #232323;
 }
 
-.carousel-container {
+.component-container {
     padding: 15px;
 }
 
-.carousel-title {
+.component-title {
     background: #000;
     border-radius: 5px 5px 0 0;
     padding: 10px 15px;
@@ -20,15 +24,16 @@
     font-weight: 400;
 }
 
-.carousel-question {
+.component-question {
     font-weight: bold;
 }
-.carousel-button-group {
+
+.button-grouper {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
-.carousel-button {
+.button {
     font-size: 1.1rem;
     width: 49%;
     color: #fff;
@@ -38,7 +43,7 @@
     padding: 20px 25px;
     margin: 5px 0;
 }
-.carousel-button:hover {
+.button:hover {
     cursor: pointer;
     background: #23a326;
 }
