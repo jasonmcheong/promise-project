@@ -21,7 +21,9 @@ const ThankYouEnd = () => {
                 </ul>
 
                 <form onSubmit={handleSubmit}>
-                    <button className="button">Back to start</button>
+                    <button className="button" style={{ width: '100%' }}>
+                        Back to start
+                    </button>
                 </form>
             </div>
         </div>

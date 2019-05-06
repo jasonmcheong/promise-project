@@ -34,7 +34,7 @@ class ThankYou extends React.Component {
                             If you are interested, we have three optional questions to help us with Strategy. Are you
                             willing to answer the optional questions?
                         </p>
-                        <div className="button-grouper">
+                        <div className="button-grouper" style={{ marginBottom: '10px' }}>
                             <button className="button" onClick={this.handleClick} value="Yes">
                                 Yes
                             </button>
