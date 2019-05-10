@@ -1,6 +1,20 @@
+// TODO: Create a randomly generated id for each session, right now using static id
+
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import UserForm from './UserForm';
+import ProceedToUserForm from './ProceedToUserForm';
+import axios from 'axios';
+
+const postToDatabase = questions => {
+    console.log(questions);
+    axios
+        .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions', {
+            id: '111',
+            questions,
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+};
 
 class CarouselView extends React.Component {
     state = {
@@ -52,6 +66,10 @@ class CarouselView extends React.Component {
         const { index } = this.state;
         const q = this.props.questions;
 
+        if (index === q.length) {
+            postToDatabase(this.state.userInput);
+        }
+
         return index < q.length ? (
             <Carousel
                 activeIndex={index}
@@ -68,7 +86,7 @@ class CarouselView extends React.Component {
                 {questionList}
             </Carousel>
         ) : (
-            <UserForm />
+            <ProceedToUserForm />
         );
     }
 }

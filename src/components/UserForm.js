@@ -1,5 +1,9 @@
+// TODO: POST request failed, error with data, Supplied AttributeValue is empty, must contain exactly one of the supported datatypes"
+// MAYBE phone number must be a string or number ???
+
 import React from 'react';
 import ThankYou from './ThankYou';
+import axios from 'axios';
 
 class UserForm extends React.Component {
     state = {
@@ -11,17 +15,6 @@ class UserForm extends React.Component {
         submitted: false,
     };
 
-    componentWillMount() {
-        this.setState({
-            name: '',
-            email: '',
-            phone: '',
-            country: '',
-            update: 'Frequent',
-            submitted: false,
-        });
-    }
-
     handleOnChange = e => {
         const value = e.target.value;
         const name = e.target.name;
@@ -31,6 +24,19 @@ class UserForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.setState({ submitted: true });
+        axios
+            .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/form', {
+                id: '111',
+                form: {
+                    name: this.state.name,
+                    email: this.state.email,
+                    phone: this.state.phone,
+                    country: this.state.country,
+                    newsletter: this.state.newsletter,
+                },
+            })
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
     };
 
     render() {
@@ -117,15 +123,15 @@ class UserForm extends React.Component {
                         <div className="ui radio checkbox">
                             <input
                                 type="radio"
-                                id="Infrequent"
+                                id="Monthly"
                                 name="update"
                                 onChange={this.handleOnChange}
-                                value="Infrequent"
-                                checked={this.state.update === 'Infrequent'}
+                                value="Monthly"
+                                checked={this.state.update === 'Monthly'}
                             />
                             <label
                                 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '1rem' }}
-                                htmlFor="Infrequent"
+                                htmlFor="Monthly"
                             >
                                 Each month with news from Esperanto Antaŭen projects and the Esperanto movement.
                             </label>
