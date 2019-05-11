@@ -1,6 +1,7 @@
 import React from 'react';
 import UserForm from './UserForm';
 import ThankYouEnd from './ThankYouEnd';
+import ContextId from '../context/ContextId';
 
 class ProceedToUserForm extends React.Component {
     state = {
@@ -13,7 +14,7 @@ class ProceedToUserForm extends React.Component {
 
     render() {
         if (this.state.userChoice === 'Yes') {
-            return <UserForm />;
+            return <ContextId.Consumer>{context => <UserForm id={context.id} />}</ContextId.Consumer>;
         }
 
         if (this.state.userChoice === 'No') {

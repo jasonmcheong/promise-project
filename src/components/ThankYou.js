@@ -2,6 +2,7 @@ import React from 'react';
 import ThankYouEnd from './ThankYouEnd';
 import CarouselViewAdd from './CarouselViewAdd';
 import Loading from './Loading';
+import ContextId from '../context/ContextId';
 
 class ThankYou extends React.Component {
     state = {
@@ -51,7 +52,9 @@ class ThankYou extends React.Component {
             );
         } else if (this.state.userChoice === 'Yes') {
             return this.state.questionsAdditional.length > 0 ? (
-                <CarouselViewAdd questions={this.state.questionsAdditional} />
+                <ContextId.Consumer>
+                    {context => <CarouselViewAdd questions={this.state.questionsAdditional} id={context.id} />}
+                </ContextId.Consumer>
             ) : (
                 <Loading />
             );

@@ -3,17 +3,14 @@ import Carousel from 'react-bootstrap/Carousel';
 import ProceedToUserForm from './ProceedToUserForm';
 import axios from 'axios';
 
-const postToDatabase = (questions) => {
+const postToDatabase = (questions, id) => {
     axios
-        .post(
-            'https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions',
-            {
-                id: '111',
-                questions,
-            },
-        )
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions', {
+            id: id.toString(),
+            questions,
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
 };
 
 class CarouselView extends React.Component {
@@ -29,52 +26,47 @@ class CarouselView extends React.Component {
     }
 
     render() {
-        const questionList = this.props.questions.map(
-            ({ title, information, question, answers }) => {
-                const answerList = answers.map(({ answer }) => {
-                    return (
-                        <button
-                            className="button"
-                            key={answer}
-                            value={answer}
-                            onClick={(e) =>
-                                this.state.index <
-                                    this.props.questions.length &&
-                                this.setState({
-                                    index: index + 1,
-                                    userInput: [
-                                        ...this.state.userInput,
-                                        `${title} - ${e.target.value}`,
-                                    ],
-                                })
-                            }>
-                            {answer}
-                        </button>
-                    );
-                });
-
+        const questionList = this.props.questions.map(({ title, information, question, answers }) => {
+            const answerList = answers.map(({ answer }) => {
                 return (
-                    <Carousel.Item key={title}>
-                        <h2 className="component-title">{title}</h2>
-                        <div className="component-container">
-                            <p>{information}</p>
-                            <div>
-                                <p className="component-question">{question}</p>
-                                <div className="button-grouper">
-                                    {answerList}
-                                </div>
-                            </div>
-                        </div>
-                    </Carousel.Item>
+                    <button
+                        className="button"
+                        key={answer}
+                        value={answer}
+                        onClick={e =>
+                            this.state.index < this.props.questions.length &&
+                            this.setState({
+                                index: index + 1,
+                                userInput: [...this.state.userInput, `${title} - ${e.target.value}`],
+                            })
+                        }
+                    >
+                        {answer}
+                    </button>
                 );
-            },
-        );
+            });
+
+            return (
+                <Carousel.Item key={title}>
+                    <h2 className="component-title">
+                        {title} ({this.state.index + 1} / {this.props.questions.length})
+                    </h2>
+                    <div className="component-container">
+                        <p>{information}</p>
+                        <div>
+                            <p className="component-question">{question}</p>
+                            <div className="button-grouper">{answerList}</div>
+                        </div>
+                    </div>
+                </Carousel.Item>
+            );
+        });
 
         const { index } = this.state;
         const q = this.props.questions;
 
         if (index === q.length) {
-            postToDatabase(this.state.userInput);
+            postToDatabase(this.state.userInput, this.props.id);
         }
 
         return index < q.length ? (
@@ -88,7 +80,8 @@ class CarouselView extends React.Component {
                 onSelect={this.handleSelect}
                 slide={false}
                 wrap={false}
-                className="Component">
+                className="Component"
+            >
                 {questionList}
             </Carousel>
         ) : (

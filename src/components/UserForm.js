@@ -12,31 +12,28 @@ class UserForm extends React.Component {
         submitted: false,
     };
 
-    handleOnChange = (e) => {
+    handleOnChange = e => {
         const value = e.target.value;
         const name = e.target.name;
         this.setState({ [name]: value });
     };
 
-    handleSubmit = (e) => {
+    handleSubmit = e => {
         e.preventDefault();
         this.setState({ submitted: true });
         axios
-            .post(
-                'https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/form',
-                {
-                    id: '111',
-                    form: {
-                        name: this.state.name,
-                        email: this.state.email || 'none',
-                        phone: this.state.phone || 'none',
-                        country: this.state.country,
-                        newsletter: this.state.newsletter,
-                    },
+            .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/form', {
+                id: this.props.id,
+                form: {
+                    name: this.state.name,
+                    email: this.state.email || 'none',
+                    phone: this.state.phone || 'none',
+                    country: this.state.country,
+                    newsletter: this.state.newsletter,
                 },
-            )
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
+            })
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
     };
 
     render() {
@@ -51,7 +48,8 @@ class UserForm extends React.Component {
                             fontSize: '1.3rem',
                             marginBottom: '1rem',
                         }}
-                        htmlFor="name">
+                        htmlFor="name"
+                    >
                         Name
                     </label>
                     <input
@@ -71,7 +69,8 @@ class UserForm extends React.Component {
                             fontSize: '1.3rem',
                             marginBottom: '1rem',
                         }}
-                        htmlFor="email">
+                        htmlFor="email"
+                    >
                         Email
                     </label>
                     <input
@@ -90,7 +89,8 @@ class UserForm extends React.Component {
                             fontSize: '1.3rem',
                             marginBottom: '1rem',
                         }}
-                        htmlFor="phone">
+                        htmlFor="phone"
+                    >
                         Phone Number
                     </label>
                     <input
@@ -109,7 +109,8 @@ class UserForm extends React.Component {
                             fontSize: '1.3rem',
                             marginBottom: '1rem',
                         }}
-                        htmlFor="country">
+                        htmlFor="country"
+                    >
                         Country
                     </label>
                     <input
@@ -128,7 +129,8 @@ class UserForm extends React.Component {
                             fontSize: '1.3rem',
                             marginBottom: '1rem',
                         }}
-                        htmlFor="newsletter">
+                        htmlFor="newsletter"
+                    >
                         After the first email contact me (frequency):
                     </label>
                     <div className="field">
@@ -147,9 +149,9 @@ class UserForm extends React.Component {
                                     fontSize: '1.2rem',
                                     marginBottom: '1rem',
                                 }}
-                                htmlFor="Frequent">
-                                To inform me about events and important news
-                                from the Esperanto movement.
+                                htmlFor="Frequent"
+                            >
+                                To inform me about events and important news from the Esperanto movement.
                             </label>
                         </div>
                     </div>
@@ -169,9 +171,9 @@ class UserForm extends React.Component {
                                     fontSize: '1.2rem',
                                     marginBottom: '1rem',
                                 }}
-                                htmlFor="Monthly">
-                                Each month with news from Esperanto Antaŭen
-                                projects and the Esperanto movement.
+                                htmlFor="Monthly"
+                            >
+                                Each month with news from Esperanto Antaŭen projects and the Esperanto movement.
                             </label>
                         </div>
                     </div>
@@ -191,9 +193,9 @@ class UserForm extends React.Component {
                                     fontSize: '1.2rem',
                                     marginBottom: '1rem',
                                 }}
-                                htmlFor="Rarely">
-                                Rarely, only when major milestones are reached
-                                (10 000, ...1 000 000 etc).
+                                htmlFor="Rarely"
+                            >
+                                Rarely, only when major milestones are reached (10 000, ...1 000 000 etc).
                             </label>
                         </div>
                     </div>

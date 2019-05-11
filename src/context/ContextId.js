@@ -1,5 +1,5 @@
 import React from 'react';
 
-const contextId = React.createContext();
+const ContextId = React.createContext();
 
-export default contextId;
+export default ContextId;

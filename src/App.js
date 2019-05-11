@@ -5,6 +5,8 @@ import './styles/App.css';
 import './styles/index.css';
 import CarouselView from './components/CarouselView.js';
 import Loading from './components/Loading.js';
+import ProviderId from './context/ProviderId';
+import ContextId from './context/ContextId';
 
 class App extends React.Component {
     state = {
@@ -13,11 +15,9 @@ class App extends React.Component {
 
     componentWillMount = () => {
         fetch('http://ea-mondo.org/wp-json/wp/v2/promise_questions')
-            .then((res) => res.json())
-            .then((data) => {
-                data.map((res) =>
-                    this.setState({ questions: res.acf.promise_questions }),
-                );
+            .then(res => res.json())
+            .then(data => {
+                data.map(res => this.setState({ questions: res.acf.promise_questions }));
             });
     };
 
@@ -25,11 +25,15 @@ class App extends React.Component {
         return (
             <ProviderId>
                 <div className="App">
-                    {this.state.questions.length > 0 ? (
-                        <CarouselView questions={this.state.questions} />
-                    ) : (
-                        <Loading />
-                    )}
+                    <ContextId.Consumer>
+                        {context =>
+                            this.state.questions.length > 0 ? (
+                                <CarouselView questions={this.state.questions} id={context.id} />
+                            ) : (
+                                <Loading />
+                            )
+                        }
+                    </ContextId.Consumer>
                 </div>
             </ProviderId>
         );
