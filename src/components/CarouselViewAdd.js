@@ -1,6 +1,21 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import ThankYouEnd from './ThankYouEnd';
+import axios from 'axios';
+
+const postToDatabase = (questions) => {
+    console.log(questions);
+    axios
+        .post(
+            'https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions-additional',
+            {
+                id: '111',
+                questions,
+            },
+        )
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+};
 
 class CarouselViewAdd extends React.Component {
     state = {
@@ -23,27 +38,31 @@ class CarouselViewAdd extends React.Component {
                 answers_additional,
                 more_information_additional,
             }) => {
-                const answerList = answers_additional.map(({ answer_additional }) => {
-                    return (
-                        <button
-                            className="button"
-                            key={answer_additional}
-                            value={answer_additional}
-                            onClick={e =>
-                                this.state.index < this.props.questions.length &&
-                                this.setState({
-                                    index: index + 1,
-                                    userInputAdditional: [
-                                        ...this.state.userInputAdditional,
-                                        `${title_additional} - ${e.target.value}`,
-                                    ],
-                                })
-                            }
-                        >
-                            {answer_additional}
-                        </button>
-                    );
-                });
+                const answerList = answers_additional.map(
+                    ({ answer_additional }) => {
+                        return (
+                            <button
+                                className="button"
+                                key={answer_additional}
+                                value={answer_additional}
+                                onClick={(e) =>
+                                    this.state.index <
+                                        this.props.questions.length &&
+                                    this.setState({
+                                        index: index + 1,
+                                        userInputAdditional: [
+                                            ...this.state.userInputAdditional,
+                                            `${title_additional} - ${
+                                                e.target.value
+                                            }`,
+                                        ],
+                                    })
+                                }>
+                                {answer_additional}
+                            </button>
+                        );
+                    },
+                );
 
                 return (
                     <Carousel.Item key={title_additional}>
@@ -51,18 +70,26 @@ class CarouselViewAdd extends React.Component {
                         <div className="component-container">
                             <p>{information_additional}</p>
                             <div>
-                                <p className="component-question">{question_additional}</p>
-                                <div className="button-grouper">{answerList}</div>
+                                <p className="component-question">
+                                    {question_additional}
+                                </p>
+                                <div className="button-grouper">
+                                    {answerList}
+                                </div>
                             </div>
                             <p>{more_information_additional}</p>
                         </div>
                     </Carousel.Item>
                 );
-            }
+            },
         );
 
         const { index } = this.state;
         const q = this.props.questions;
+
+        if (index === q.length) {
+            postToDatabase(this.state.userInputAdditional);
+        }
 
         return index < q.length ? (
             <Carousel
@@ -75,8 +102,7 @@ class CarouselViewAdd extends React.Component {
                 onSelect={this.handleSelect}
                 slide={false}
                 wrap={false}
-                className="Component"
-            >
+                className="Component">
                 {questionList}
             </Carousel>
         ) : (
