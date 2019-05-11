@@ -19,6 +19,10 @@ class CarouselView extends React.Component {
         userInput: [],
     };
 
+    componentDidUpdate() {
+        window.scrollTo(0, 0);
+    }
+
     handleSelect(selectedIndex) {
         this.setState({
             index: selectedIndex,

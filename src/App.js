@@ -1,12 +1,10 @@
-// TODO: Create a randomly generated id for each session, right now using static id
-
 import React from 'react';
-import './styles/App.css';
 import './styles/index.css';
 import CarouselView from './components/CarouselView.js';
 import Loading from './components/Loading.js';
 import ProviderId from './context/ProviderId';
 import ContextId from './context/ContextId';
+import Header from './components/Header';
 
 class App extends React.Component {
     state = {
@@ -25,15 +23,18 @@ class App extends React.Component {
         return (
             <ProviderId>
                 <div className="App">
-                    <ContextId.Consumer>
-                        {context =>
-                            this.state.questions.length > 0 ? (
-                                <CarouselView questions={this.state.questions} id={context.id} />
-                            ) : (
-                                <Loading />
-                            )
-                        }
-                    </ContextId.Consumer>
+                    <Header />
+                    <div className="contain">
+                        <ContextId.Consumer>
+                            {context =>
+                                this.state.questions.length > 0 ? (
+                                    <CarouselView questions={this.state.questions} id={context.id} />
+                                ) : (
+                                    <Loading />
+                                )
+                            }
+                        </ContextId.Consumer>
+                    </div>
                 </div>
             </ProviderId>
         );

@@ -1,9 +1,37 @@
+.App {
+    font-family: 'Muli', sans-serif;
+    background: #444;
+    min-height: 100vh;
+}
+
+.contain {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+}
+
+.Header {
+    display: flex;
+    justify-content: center;
+    background: #444;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    color: #fff;
+    margin-bottom: 1vh;
+    padding-top: 1rem;
+}
+
 .Form {
     padding: 0 2%;
 }
 
 .Component {
-    font-family: 'Muli', sans-serif;
     font-size: 1.2rem;
     width: 680px;
     margin: 0 auto;
@@ -30,20 +58,27 @@
 
 .button-grouper {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
+
 .button {
     font-size: 1.1rem;
-    width: 49%;
+    width: 100%;
     color: #fff;
     background: #067a08;
     border: none;
     border-radius: 5px;
     padding: 20px 25px;
-    margin: 5px 0;
+    margin: 8px 0;
 }
+
 .button:hover {
     cursor: pointer;
     background: #23a326;
+}
+
+.back-button {
+    border-radius: 5px;
+    padding: 12px 32px;
+    margin-top: 15px;
 }

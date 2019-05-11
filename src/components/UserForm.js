@@ -120,6 +120,7 @@ class UserForm extends React.Component {
                         placeholder="Country"
                         onChange={this.handleOnChange}
                         value={this.state.country}
+                        required
                     />
                 </div>
                 <div className="grouped fields">

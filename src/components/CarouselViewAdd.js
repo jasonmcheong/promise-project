@@ -19,6 +19,10 @@ class CarouselViewAdd extends React.Component {
         userInputAdditional: [],
     };
 
+    componentDidUpdate() {
+        window.scrollTo(0, 0);
+    }
+
     handleSelect(selectedIndex) {
         this.setState({
             index: selectedIndex,
