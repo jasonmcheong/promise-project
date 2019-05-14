@@ -25,6 +25,8 @@ class UserForm extends React.Component {
         axios
             .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/form', {
                 id: this.props.id,
+                coordinates: this.props.coordinates,
+                date: this.props.date,
                 form: {
                     name: this.state.name,
                     email: this.state.email || 'none',

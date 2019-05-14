@@ -2,8 +2,8 @@ import React from 'react';
 import './styles/index.css';
 import CarouselView from './components/CarouselView.js';
 import Loading from './components/Loading.js';
-import ProviderId from './context/ProviderId';
-import ContextId from './context/ContextId';
+import Provider from './context/Provider';
+import Context from './context/Context';
 import Header from './components/Header';
 
 class App extends React.Component {
@@ -21,22 +21,27 @@ class App extends React.Component {
 
     render() {
         return (
-            <ProviderId>
+            <Provider>
                 <div className="App">
                     <Header />
                     <div className="contain">
-                        <ContextId.Consumer>
+                        <Context.Consumer>
                             {context =>
                                 this.state.questions.length > 0 ? (
-                                    <CarouselView questions={this.state.questions} id={context.id} />
+                                    <CarouselView
+                                        questions={this.state.questions}
+                                        id={context.id}
+                                        coordinates={context.coordinates}
+                                        date={context.date}
+                                    />
                                 ) : (
                                     <Loading />
                                 )
                             }
-                        </ContextId.Consumer>
+                        </Context.Consumer>
                     </div>
                 </div>
-            </ProviderId>
+            </Provider>
         );
     }
 }

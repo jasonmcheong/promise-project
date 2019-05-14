@@ -3,10 +3,12 @@ import Carousel from 'react-bootstrap/Carousel';
 import ProceedToUserForm from './ProceedToUserForm';
 import axios from 'axios';
 
-const postToDatabase = (questions, id) => {
+const postToDatabase = (questions, id, coordinates, date) => {
     axios
         .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions', {
-            id: id.toString(),
+            id,
+            coordinates,
+            date,
             questions,
         })
         .then(res => console.log(res))
@@ -70,7 +72,7 @@ class CarouselView extends React.Component {
         const q = this.props.questions;
 
         if (index === q.length) {
-            postToDatabase(this.state.userInput, this.props.id);
+            postToDatabase(this.state.userInput, this.props.id, this.props.coordinates, this.props.date);
         }
 
         return index < q.length ? (
