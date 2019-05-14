@@ -12,9 +12,7 @@ class Header extends React.Component {
                         <p style={{ fontSize: '1.2rem' }}>ea-mondo.org</p>
                     </div>
                     <form onSubmit={this.handleSubmit}>
-                        <button className="button back-button">
-                            <i className="fas fa-angle-double-left" /> Go Back
-                        </button>
+                        <button className="button back-button">START AGAIN</button>
                     </form>
                 </header>
             </div>

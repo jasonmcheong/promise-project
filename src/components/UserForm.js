@@ -10,6 +10,7 @@ class UserForm extends React.Component {
         country: '',
         newsletter: 'Frequent',
         submitted: false,
+        translate: false,
     };
 
     handleOnChange = e => {
@@ -41,7 +42,36 @@ class UserForm extends React.Component {
             <ThankYou />
         ) : (
             <form className="ui large form Form" onSubmit={this.handleSubmit}>
-                <div className="field">
+                <div className="toggle">
+                    <div className="ui toggle checkbox">
+                        <input
+                            type="checkbox"
+                            readOnly
+                            checked={this.state.translate}
+                            onClick={() => this.setState({ translate: !this.state.translate })}
+                        />
+                        <label />
+                    </div>
+                    {!this.state.translate ? (
+                        <label style={{ color: '#fff', fontSize: '1.3rem' }}>Translate to Esperanto</label>
+                    ) : (
+                        <label style={{ color: '#fff', fontSize: '1.3rem' }}>Traduki al la Angla</label>
+                    )}
+                </div>
+                <p style={{ color: '#fff', fontSize: '1.3rem', marginBottom: '3.5rem' }}>
+                    {!this.state.translate ? (
+                        <>
+                            I promise to learn the international language, Esperanto, after 100 000 000 people make this
+                            promise.
+                        </>
+                    ) : (
+                        <>
+                            Mi promesas lerni la internacian lingvon, Esperanto post kiam 100 000 000 personoj faras ĉi
+                            tiun promeson.
+                        </>
+                    )}
+                </p>
+                <div className="field required">
                     <label
                         style={{
                             color: '#fff',
@@ -50,7 +80,7 @@ class UserForm extends React.Component {
                         }}
                         htmlFor="name"
                     >
-                        Name
+                        {!this.state.translate ? <>Name</> : <>Nomo</>}
                     </label>
                     <input
                         type="text"
@@ -71,7 +101,7 @@ class UserForm extends React.Component {
                         }}
                         htmlFor="email"
                     >
-                        Email
+                        {!this.state.translate ? <>Email</> : <>Retadreso</>}
                     </label>
                     <input
                         type="email"
@@ -91,7 +121,7 @@ class UserForm extends React.Component {
                         }}
                         htmlFor="phone"
                     >
-                        Phone Number
+                        {!this.state.translate ? <>Phone Number</> : <>Telefon-numero</>}
                     </label>
                     <input
                         type="tel"
@@ -102,7 +132,7 @@ class UserForm extends React.Component {
                         value={this.state.phone}
                     />
                 </div>
-                <div className="field">
+                <div className="field required">
                     <label
                         style={{
                             color: '#fff',
@@ -111,7 +141,7 @@ class UserForm extends React.Component {
                         }}
                         htmlFor="country"
                     >
-                        Country
+                        {!this.state.translate ? <>Country</> : <>Nacio</>}
                     </label>
                     <input
                         type="text"
@@ -132,7 +162,11 @@ class UserForm extends React.Component {
                         }}
                         htmlFor="newsletter"
                     >
-                        After the first email contact me (frequency):
+                        {!this.state.translate ? (
+                            <>After the first email contact me (frequency):</>
+                        ) : (
+                            <>Post la unua retmesaĝo, bonvolu kontakti min (ofteco):</>
+                        )}
                     </label>
                     <div className="field">
                         <div className="ui radio checkbox">
@@ -152,7 +186,11 @@ class UserForm extends React.Component {
                                 }}
                                 htmlFor="Frequent"
                             >
-                                To inform me about events and important news from the Esperanto movement.
+                                {!this.state.translate ? (
+                                    <>to inform me about events and important news from the Esperanto movement.</>
+                                ) : (
+                                    <>por informi min pri eventoj kaj grava novaĵo de la Esperanto-movado.</>
+                                )}
                             </label>
                         </div>
                     </div>
@@ -174,7 +212,15 @@ class UserForm extends React.Component {
                                 }}
                                 htmlFor="Monthly"
                             >
-                                Each month with news from Esperanto Antaŭen projects and the Esperanto movement.
+                                {!this.state.translate ? (
+                                    <>
+                                        each month with news from Esperanto Antaŭen projects and the Esperanto movement.
+                                    </>
+                                ) : (
+                                    <>
+                                        ĉiumonate, kun novaĵo de projektoj de Esperanto Antaŭen kaj la Esperanto-movado.
+                                    </>
+                                )}
                             </label>
                         </div>
                     </div>
@@ -196,13 +242,20 @@ class UserForm extends React.Component {
                                 }}
                                 htmlFor="Rarely"
                             >
-                                Rarely, only when major milestones are reached (10 000, ...1 000 000 etc).
+                                {!this.state.translate ? (
+                                    <>rarely, only when major milestones are reached (10 000, ...1 000 000 etc).</>
+                                ) : (
+                                    <>
+                                        malofte, nur post la atingo de notindaj progres-punktoj (10 000, … 1 000 000
+                                        ktp).
+                                    </>
+                                )}
                             </label>
                         </div>
                     </div>
                 </div>
                 <button className="button" style={{ width: '100%' }}>
-                    Submit
+                    {!this.state.translate ? <>Submit</> : <>Sendu</>}
                 </button>
             </form>
         );

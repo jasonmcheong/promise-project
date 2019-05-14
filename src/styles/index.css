@@ -4,6 +4,12 @@
     min-height: 100vh;
 }
 
+.toggle {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .contain {
     width: 100%;
     display: flex;
@@ -21,10 +27,16 @@
 header {
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 100%;
+    max-width: 680px;
     color: #fff;
     margin-bottom: 1vh;
-    padding-top: 1rem;
+    padding: 1rem;
+    padding-bottom: 0;
+}
+
+header form {
+    width: 60%;
 }
 
 .Form {
@@ -62,6 +74,7 @@ header {
 }
 
 .button {
+    font-family: 'Muli', sans-serif;
     font-size: 1.1rem;
     width: 100%;
     color: #fff;
@@ -78,7 +91,18 @@ header {
 }
 
 .back-button {
-    border-radius: 5px;
-    padding: 12px 32px;
-    margin-top: 15px;
+    font-size: 2rem;
+    padding: 15px 40px;
+}
+
+@media only screen and (max-width: 412px) {
+    header {
+        text-align: center;
+        align-content: space-around;
+        flex-direction: column;
+    }
+
+    header form {
+        width: 100%;
+    }
 }

@@ -53,7 +53,7 @@ class CarouselView extends React.Component {
             return (
                 <Carousel.Item key={title}>
                     <h2 className="component-title">
-                        {title} ({this.state.index + 1} / {this.props.questions.length})
+                        {title} of {this.props.questions.length + 1}
                     </h2>
                     <div className="component-container">
                         <p>{information}</p>

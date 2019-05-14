@@ -62,9 +62,7 @@ class CarouselViewAdd extends React.Component {
 
                 return (
                     <Carousel.Item key={title_additional}>
-                        <h2 className="component-title">
-                            {title_additional} ({this.state.index} / {this.props.questions.length})
-                        </h2>
+                        <h2 className="component-title">{title_additional}</h2>
                         <div className="component-container">
                             <p>{information_additional}</p>
                             <div>

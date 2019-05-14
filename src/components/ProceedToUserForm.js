@@ -23,7 +23,7 @@ class ProceedToUserForm extends React.Component {
 
         return (
             <div className="Component">
-                <h2 className="component-title">Help us reach our goal</h2>
+                <h2 className="component-title">Question 7 of 7</h2>
                 <div className="component-container">
                     <p>We are trying to collect 100 000 000 promises</p>
                     <div>
