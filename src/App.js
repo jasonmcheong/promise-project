@@ -12,7 +12,7 @@ class App extends React.Component {
     };
 
     componentWillMount = () => {
-        fetch('http://ea-mondo.org/wp-json/wp/v2/promise_questions')
+        fetch('https://ea-mondo.org/wp-json/wp/v2/promise_questions')
             .then(res => res.json())
             .then(data => {
                 data.map(res => this.setState({ questions: res.acf.promise_questions }));

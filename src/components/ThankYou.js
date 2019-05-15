@@ -11,7 +11,7 @@ class ThankYou extends React.Component {
     };
 
     componentWillMount() {
-        fetch('http://ea-mondo.org/wp-json/wp/v2/promise_questions_ad')
+        fetch('https://ea-mondo.org/wp-json/wp/v2/promise_questions_ad')
             .then(res => res.json())
             .then(data => {
                 data.map(res => this.setState({ questionsAdditional: res.acf.promise_additional_questions }));
