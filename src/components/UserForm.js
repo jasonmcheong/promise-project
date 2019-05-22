@@ -88,7 +88,7 @@ class UserForm extends React.Component {
                         type="text"
                         id="name"
                         name="name"
-                        placeholder="Name"
+                        placeholder={!this.state.translate ? 'Name' : 'Nomo'}
                         onChange={this.handleOnChange}
                         value={this.state.name}
                         required
@@ -109,7 +109,7 @@ class UserForm extends React.Component {
                         type="email"
                         id="email"
                         name="email"
-                        placeholder="Email"
+                        placeholder={!this.state.translate ? 'Email' : 'Retadreso'}
                         onChange={this.handleOnChange}
                         value={this.state.email}
                     />
@@ -129,7 +129,7 @@ class UserForm extends React.Component {
                         type="tel"
                         id="phone"
                         name="phone"
-                        placeholder="Phone Number"
+                        placeholder={!this.state.translate ? 'Phone Number' : 'Telefon-numero'}
                         onChange={this.handleOnChange}
                         value={this.state.phone}
                     />
@@ -143,13 +143,13 @@ class UserForm extends React.Component {
                         }}
                         htmlFor="country"
                     >
-                        {!this.state.translate ? <>Country</> : <>Nacio</>}
+                        {!this.state.translate ? <>City, Country</> : <>Urbo, Nacio</>}
                     </label>
                     <input
                         type="text"
                         id="country"
                         name="country"
-                        placeholder="Country"
+                        placeholder={!this.state.translate ? 'City, Country' : 'Urbo, Nacio'}
                         onChange={this.handleOnChange}
                         value={this.state.country}
                         required
