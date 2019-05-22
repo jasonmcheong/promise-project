@@ -40,6 +40,20 @@ class UserForm extends React.Component {
     };
 
     render() {
+        const {
+            translate_button,
+            promise,
+            name,
+            email,
+            phone_number,
+            city_country,
+            frequency,
+            frequency_frequent,
+            frequency_monthly,
+            frequency_rarely,
+            submit_button,
+        } = this.props.form;
+
         return this.state.submitted ? (
             <ThankYou />
         ) : (
@@ -55,17 +69,14 @@ class UserForm extends React.Component {
                         <label />
                     </div>
                     {!this.state.translate ? (
-                        <label style={{ color: '#fff', fontSize: '1.3rem' }}>Translate to Esperanto</label>
+                        <label style={{ color: '#fff', fontSize: '1.3rem' }}>{translate_button}</label>
                     ) : (
                         <label style={{ color: '#fff', fontSize: '1.3rem' }}>Traduku al la Angla</label>
                     )}
                 </div>
                 <p style={{ color: '#fff', fontSize: '1.3rem', marginBottom: '3.5rem' }}>
                     {!this.state.translate ? (
-                        <>
-                            I promise to learn the international language, Esperanto, after 100 000 000 people make this
-                            promise.
-                        </>
+                        <>{promise}</>
                     ) : (
                         <>
                             Mi promesas lerni la internacian lingvon, Esperanto post kiam 100 000 000 personoj faras ĉi
@@ -82,13 +93,13 @@ class UserForm extends React.Component {
                         }}
                         htmlFor="name"
                     >
-                        {!this.state.translate ? <>Name</> : <>Nomo</>}
+                        {!this.state.translate ? <>{name}</> : <>Nomo</>}
                     </label>
                     <input
                         type="text"
                         id="name"
                         name="name"
-                        placeholder={!this.state.translate ? 'Name' : 'Nomo'}
+                        placeholder={!this.state.translate ? `${name}` : 'Nomo'}
                         onChange={this.handleOnChange}
                         value={this.state.name}
                         required
@@ -103,13 +114,13 @@ class UserForm extends React.Component {
                         }}
                         htmlFor="email"
                     >
-                        {!this.state.translate ? <>Email</> : <>Retadreso</>}
+                        {!this.state.translate ? <>{email}</> : <>Retadreso</>}
                     </label>
                     <input
                         type="email"
                         id="email"
                         name="email"
-                        placeholder={!this.state.translate ? 'Email' : 'Retadreso'}
+                        placeholder={!this.state.translate ? `${email}` : 'Retadreso'}
                         onChange={this.handleOnChange}
                         value={this.state.email}
                     />
@@ -123,13 +134,13 @@ class UserForm extends React.Component {
                         }}
                         htmlFor="phone"
                     >
-                        {!this.state.translate ? <>Phone Number</> : <>Telefon-numero</>}
+                        {!this.state.translate ? <>{phone_number}</> : <>Telefon-numero</>}
                     </label>
                     <input
                         type="tel"
                         id="phone"
                         name="phone"
-                        placeholder={!this.state.translate ? 'Phone Number' : 'Telefon-numero'}
+                        placeholder={!this.state.translate ? `${phone_number}` : 'Telefon-numero'}
                         onChange={this.handleOnChange}
                         value={this.state.phone}
                     />
@@ -143,13 +154,13 @@ class UserForm extends React.Component {
                         }}
                         htmlFor="country"
                     >
-                        {!this.state.translate ? <>City, Country</> : <>Urbo, Nacio</>}
+                        {!this.state.translate ? <>{city_country}</> : <>Urbo, Nacio</>}
                     </label>
                     <input
                         type="text"
                         id="country"
                         name="country"
-                        placeholder={!this.state.translate ? 'City, Country' : 'Urbo, Nacio'}
+                        placeholder={!this.state.translate ? `${city_country}` : 'Urbo, Nacio'}
                         onChange={this.handleOnChange}
                         value={this.state.country}
                         required
@@ -165,7 +176,7 @@ class UserForm extends React.Component {
                         htmlFor="newsletter"
                     >
                         {!this.state.translate ? (
-                            <>After the first email contact me (frequency):</>
+                            <>{frequency}</>
                         ) : (
                             <>Post la unua retmesaĝo, bonvolu kontakti min (ofteco):</>
                         )}
@@ -189,7 +200,7 @@ class UserForm extends React.Component {
                                 htmlFor="Frequent"
                             >
                                 {!this.state.translate ? (
-                                    <>to inform me about events and important news from the Esperanto movement.</>
+                                    <>{frequency_frequent}</>
                                 ) : (
                                     <>por informi min pri eventoj kaj grava novaĵo de la Esperanto-movado.</>
                                 )}
@@ -215,9 +226,7 @@ class UserForm extends React.Component {
                                 htmlFor="Monthly"
                             >
                                 {!this.state.translate ? (
-                                    <>
-                                        each month with news from Esperanto Antaŭen projects and the Esperanto movement.
-                                    </>
+                                    <>{frequency_monthly}</>
                                 ) : (
                                     <>
                                         ĉiumonate, kun novaĵo de projektoj de Esperanto Antaŭen kaj la Esperanto-movado.
@@ -245,7 +254,7 @@ class UserForm extends React.Component {
                                 htmlFor="Rarely"
                             >
                                 {!this.state.translate ? (
-                                    <>rarely, only when major milestones are reached (10 000, ...1 000 000 etc).</>
+                                    <>{frequency_rarely}</>
                                 ) : (
                                     <>
                                         malofte, nur post la atingo de notindaj progres-punktoj (10 000, … 1 000 000
@@ -257,7 +266,7 @@ class UserForm extends React.Component {
                     </div>
                 </div>
                 <button className="button" style={{ width: '100%' }}>
-                    {!this.state.translate ? <>Submit</> : <>Sendu</>}
+                    {!this.state.translate ? <>{submit_button}</> : <>Sendu</>}
                 </button>
             </form>
         );

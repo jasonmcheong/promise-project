@@ -5,7 +5,16 @@ import Context from '../context/Context';
 
 class ProceedToUserForm extends React.Component {
     state = {
+        form: {},
         userChoice: '',
+    };
+
+    componentDidMount = () => {
+        fetch('https://ea-mondo.org/wp-json/wp/v2/form')
+            .then(res => res.json())
+            .then(data => {
+                data.map(res => this.setState({ form: res.acf }));
+            });
     };
 
     handleClick = e => {
@@ -16,7 +25,14 @@ class ProceedToUserForm extends React.Component {
         if (this.state.userChoice === 'Yes') {
             return (
                 <Context.Consumer>
-                    {context => <UserForm id={context.id} coordinates={context.coordinates} date={context.date} />}
+                    {context => (
+                        <UserForm
+                            form={this.state.form}
+                            id={context.id}
+                            coordinates={context.coordinates}
+                            date={context.date}
+                        />
+                    )}
                 </Context.Consumer>
             );
         }
