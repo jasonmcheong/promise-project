@@ -8,6 +8,7 @@ class Provider extends React.Component {
         id: uuidv4(),
         coordinates: 'unavailable',
         date: 'unavailable',
+        userStarted: false,
     };
 
     componentWillMount = () => {
@@ -35,6 +36,10 @@ class Provider extends React.Component {
         );
     };
 
+    userStarted = () => {
+        this.setState({ userStarted: true });
+    };
+
     render() {
         return (
             <Context.Provider
@@ -42,6 +47,8 @@ class Provider extends React.Component {
                     id: this.state.id,
                     coordinates: this.state.coordinates,
                     date: this.state.date,
+                    start: this.userStarted,
+                    userStarted: this.state.userStarted,
                 }}
             >
                 {this.props.children}

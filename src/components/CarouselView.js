@@ -1,7 +1,7 @@
 import React from 'react';
+import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
 import ProceedToUserForm from './ProceedToUserForm';
-import axios from 'axios';
 
 const postToDatabase = (questions, id, coordinates, date) => {
     axios
@@ -70,6 +70,12 @@ class CarouselView extends React.Component {
 
         const { index } = this.state;
         const q = this.props.questions;
+
+        if (this.state.userInput.length === 1) {
+            setTimeout(() => {
+                this.props.start();
+            });
+        }
 
         if (index === q.length) {
             postToDatabase(this.state.userInput, this.props.id, this.props.coordinates, this.props.date);

@@ -5,6 +5,7 @@ import Loading from './components/Loading.js';
 import Provider from './context/Provider';
 import Context from './context/Context';
 import Header from './components/Header';
+import Timer from './components/Timer';
 
 class App extends React.Component {
     state = {
@@ -28,12 +29,16 @@ class App extends React.Component {
                         <Context.Consumer>
                             {context =>
                                 this.state.questions.length > 0 ? (
-                                    <CarouselView
-                                        questions={this.state.questions}
-                                        id={context.id}
-                                        coordinates={context.coordinates}
-                                        date={context.date}
-                                    />
+                                    <>
+                                        {context.userStarted === true && <Timer />}
+                                        <CarouselView
+                                            questions={this.state.questions}
+                                            id={context.id}
+                                            coordinates={context.coordinates}
+                                            date={context.date}
+                                            start={context.start}
+                                        />
+                                    </>
                                 ) : (
                                     <Loading />
                                 )
