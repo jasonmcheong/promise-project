@@ -1,9 +1,16 @@
+/*
+ ** TODO: Implement Browser Sync to send data from IndexedDB
+ **       when a connection is finally established
+ */
+
 import React from 'react';
 import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
 import ProceedToUserForm from './ProceedToUserForm';
+import Dexie from 'dexie';
 
 const postToDatabase = (questions, id, coordinates, date) => {
+    // If internet connection is present, send off to AWS
     axios
         .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions', {
             id,
@@ -12,7 +19,25 @@ const postToDatabase = (questions, id, coordinates, date) => {
             questions,
         })
         .then(res => console.log(res))
-        .catch(err => console.log(err));
+
+        // If there is no internet connection, add data to IndexedDB
+        .catch(err => {
+            var db = new Dexie('questionDB');
+            db.version(1).stores({
+                data: 'id, coordinates, date, questions',
+            });
+
+            db.open().catch(() => alert('Open failed'));
+
+            db.data
+                .add({ id: id, coordinates: coordinates, date: date, questions: questions })
+                .then(() => {
+                    return db.data.get(id);
+                })
+                .catch(err => {
+                    alert(`Error: ${err.stack || err}`);
+                });
+        });
 };
 
 class CarouselView extends React.Component {
