@@ -32,7 +32,7 @@ const postToDatabase = (questions, id, coordinates, date) => {
             db.data
                 .add({ id: id, coordinates: coordinates, date: date, questions: questions })
                 .then(() => {
-                    return db.data.get(id);
+                    db.data.toArray().then(all => console.log(all));
                 })
                 .catch(err => {
                     alert(`Error: ${err.stack || err}`);
