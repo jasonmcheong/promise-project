@@ -1,24 +1,59 @@
-// IndexedDB
-// ** IndexedDB version is v10 **
-let request = indexedDB.open('questionsDB', 10);
+function sendQuestions() {
+    return new Promise(function(resolve, reject) {
+        var db = indexedDB.open('questionsDB');
 
-request.onerror = function(error) {
-    console.log(`Request error: ${error}`);
-};
+        db.onsuccess = function(event) {
+            this.result
+                .transaction('data', 'readwrite')
+                .objectStore('data')
+                .getAll().onsuccess = function(event) {
+                event.target.result.forEach(res => {
+                    fetch('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            id: res.id,
+                            coordinates: res.coordinates,
+                            date: res.date,
+                            questions: res.questions,
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                        .then(response => console.log(response))
+                        .then(() => resolve())
+                        .catch(err => reject(err));
+                });
+            };
+        };
 
-request.onsuccess = function(e) {
-    console.log(`Successful`);
+        db.onerror = function(err) {
+            reject(err);
+        };
+    });
+}
 
-    var db = e.target.result;
-    var transaction = db.transaction(['data']);
-    var objectStore = transaction.objectStore('data');
-
-    objectStore.getAll().onsuccess = function(e) {
-        e.target.result.forEach(res => {
-            console.log(res.id);
-        });
-    };
-};
+/* TODO: Figure out why sync is not sending data when going back online;
+ *       have to manually sync data from service worker in google chrome dev tools
+ */
+self.addEventListener('sync', function(e) {
+    e.waitUntil(
+        sendQuestions()
+            .then(() => {
+                var db = (indexedDB.open('questionsDB').onsuccess = function(e) {
+                    this.result
+                        .transaction('data', 'readwrite')
+                        .objectStore('data')
+                        .clear().onsuccess = function(e) {
+                        console.log('data cleared');
+                    };
+                });
+            })
+            .catch(err => {
+                throw err;
+            })
+    );
+});
 
 // Service Worker
 const cacheName = 'v1';
