@@ -95,6 +95,21 @@ header form {
     padding: 15px 40px;
 }
 
+.Alert {
+    display: block;
+    background: rgba(130, 130, 130, 0.98);
+    max-width: 750px;
+    width: 100%;
+    z-index: 2;
+    padding: 100px 25px;
+    text-align: center;
+    position: absolute;
+    border-radius: 5px;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+}
+
 @media only screen and (max-width: 412px) {
     header {
         text-align: center;

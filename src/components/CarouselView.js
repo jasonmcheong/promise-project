@@ -118,7 +118,7 @@ class CarouselView extends React.Component {
                 {questionList}
             </Carousel>
         ) : (
-            <ProceedToUserForm />
+            <ProceedToUserForm proceedToForm={this.props.proceedToForm} />
         );
     }
 }

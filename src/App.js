@@ -10,13 +10,16 @@ import Timer from './components/Timer';
 class App extends React.Component {
     state = {
         questions: [],
+        proceedToForm: {},
     };
 
     componentWillMount = () => {
         fetch('https://ea-mondo.org/wp-json/wp/v2/promise_questions')
             .then(res => res.json())
             .then(data => {
-                data.map(res => this.setState({ questions: res.acf.promise_questions }));
+                data.map(res =>
+                    this.setState({ questions: res.acf.promise_questions, proceedToForm: res.acf.proceed_to_form })
+                );
             });
     };
 
@@ -33,6 +36,7 @@ class App extends React.Component {
                                         {context.userStarted === true && <Timer />}
                                         <CarouselView
                                             questions={this.state.questions}
+                                            proceedToForm={this.state.proceedToForm}
                                             id={context.id}
                                             coordinates={context.coordinates}
                                             date={context.date}

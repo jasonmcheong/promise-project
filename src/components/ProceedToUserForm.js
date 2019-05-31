@@ -41,19 +41,21 @@ class ProceedToUserForm extends React.Component {
             return <ThankYouEnd />;
         }
 
+        const { title, information, question, yes, no } = this.props.proceedToForm;
+
         return (
             <div className="Component">
-                <h2 className="component-title">Question 7 of 7</h2>
+                <h2 className="component-title">{title}</h2>
                 <div className="component-container">
-                    <p>We are trying to collect 100 000 000 promises</p>
+                    <p>{information}</p>
                     <div>
-                        <p className="component-question">Could we collect one from you?</p>
+                        <p className="component-question">{question}</p>
                         <div className="button-grouper">
                             <button className="button" onClick={this.handleClick} value="Yes">
-                                Yes
+                                {yes}
                             </button>
                             <button className="button" onClick={this.handleClick} value="No">
-                                No
+                                {no}
                             </button>
                         </div>
                     </div>
