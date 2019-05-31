@@ -1,9 +1,10 @@
 import React from 'react';
+import Alert from './Alert';
 
-// Timer initially set to 420 seconds(7 minutes)
+// Timer initially set to 600 seconds(10 minutes)
 class Timer extends React.Component {
     state = {
-        timer: 420,
+        timer: 32,
     };
 
     componentDidMount = () => {
@@ -16,7 +17,7 @@ class Timer extends React.Component {
     };
 
     render() {
-        return <></>;
+        return <>{this.state.timer <= 30 && <Alert />}</>;
     }
 }
 
