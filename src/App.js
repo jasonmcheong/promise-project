@@ -6,6 +6,7 @@ import Provider from './context/Provider';
 import Context from './context/Context';
 import Header from './components/Header';
 import Timer from './components/Timer';
+import ThankYouEnd from './components/ThankYouEnd';
 
 class App extends React.Component {
     state = {
@@ -30,22 +31,22 @@ class App extends React.Component {
                     <Header />
                     <div className="contain">
                         <Context.Consumer>
-                            {context =>
-                                this.state.questions.length > 0 ? (
-                                    <>
-                                        {context.userStarted === true && <Timer />}
-                                        <CarouselView
-                                            questions={this.state.questions}
-                                            proceedToForm={this.state.proceedToForm}
-                                            id={context.id}
-                                            coordinates={context.coordinates}
-                                            date={context.date}
-                                            start={context.start}
-                                        />
-                                    </>
-                                ) : (
-                                    <Loading />
-                                )
+                            {context => <ThankYouEnd />
+                            // this.state.questions.length > 0 ? (
+                            //     <>
+                            //         {context.userStarted === true && <Timer />}
+                            //         <CarouselView
+                            //             questions={this.state.questions}
+                            //             proceedToForm={this.state.proceedToForm}
+                            //             id={context.id}
+                            //             coordinates={context.coordinates}
+                            //             date={context.date}
+                            //             start={context.start}
+                            //         />
+                            //     </>
+                            // ) : (
+                            //     <Loading />
+                            // )
                             }
                         </Context.Consumer>
                     </div>
