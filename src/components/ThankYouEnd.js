@@ -1,4 +1,5 @@
 import React from 'react';
+import { language } from '../utility/Language';
 import Loading from './Loading';
 
 class ThankYouEnd extends React.Component {
@@ -7,7 +8,7 @@ class ThankYouEnd extends React.Component {
     };
 
     componentWillMount = () => {
-        fetch('https://ea-mondo.org/wp-json/wp/v2/thank_you')
+        fetch(`https://ea-mondo.org/wp-json/wp/v2/thank_you?slug=${language}`)
             .then(res => res.json())
             .then(data => data.map(res => this.setState({ thankYouInfo: res.acf })));
     };

@@ -1,6 +1,7 @@
 import React from 'react';
 import ThankYouEnd from './ThankYouEnd';
 import CarouselViewAdd from './CarouselViewAdd';
+import { language } from '../utility/Language';
 import Loading from './Loading';
 import Context from '../context/Context';
 
@@ -12,7 +13,7 @@ class ThankYou extends React.Component {
     };
 
     componentWillMount() {
-        fetch('https://ea-mondo.org/wp-json/wp/v2/promise_questions_ad')
+        fetch(`https://ea-mondo.org/wp-json/wp/v2/promise_questions_ad?slug=${language}`)
             .then(res => res.json())
             .then(data => {
                 data.map(res =>

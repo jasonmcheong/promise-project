@@ -1,6 +1,7 @@
 import React from 'react';
 import UserForm from './UserForm';
 import ThankYouEnd from './ThankYouEnd';
+import { language } from '../utility/Language';
 import Context from '../context/Context';
 
 class ProceedToUserForm extends React.Component {
@@ -10,7 +11,7 @@ class ProceedToUserForm extends React.Component {
     };
 
     componentDidMount = () => {
-        fetch('https://ea-mondo.org/wp-json/wp/v2/form')
+        fetch(`https://ea-mondo.org/wp-json/wp/v2/form?slug=${language}`)
             .then(res => res.json())
             .then(data => {
                 data.map(res => this.setState({ form: res.acf }));

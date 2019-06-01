@@ -6,14 +6,18 @@ class Alert extends React.Component {
     };
 
     render() {
+        const { msg, add_time, cancel } = this.props.alertInfo;
+
         return (
             <div id="alert" className="Alert">
-                <h3>The application will reset soon and all changes will be lost. ({this.props.time})</h3>
+                <h3>
+                    {msg} ({this.props.time})
+                </h3>
                 <button className="button" onClick={this.props.reset}>
-                    Add more time
+                    {add_time}
                 </button>
                 <button className="button" onClick={this.closeAlert}>
-                    Cancel
+                    {cancel}
                 </button>
             </div>
         );
