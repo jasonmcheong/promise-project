@@ -7,6 +7,7 @@ import Context from '../context/Context';
 class ThankYou extends React.Component {
     state = {
         questionsAdditional: [],
+        proceedToQuestions: {},
         userChoice: '',
     };
 
@@ -14,7 +15,12 @@ class ThankYou extends React.Component {
         fetch('https://ea-mondo.org/wp-json/wp/v2/promise_questions_ad')
             .then(res => res.json())
             .then(data => {
-                data.map(res => this.setState({ questionsAdditional: res.acf.promise_additional_questions }));
+                data.map(res =>
+                    this.setState({
+                        questionsAdditional: res.acf.promise_additional_questions,
+                        proceedToQuestions: res.acf.proceed_to_additional_questions,
+                    })
+                );
             });
     }
 
@@ -24,29 +30,23 @@ class ThankYou extends React.Component {
 
     render() {
         if (this.state.userChoice === '') {
+            const { title, information, question, yes, no, more_info } = this.state.proceedToQuestions;
+
             return (
                 <div className="Component">
-                    <h2 className="component-title">Thank You</h2>
+                    <h2 className="component-title">{title}</h2>
                     <div className="component-container">
-                        <p>
-                            Expect a welcome email within 48 hours, then future contact in accordance with your wishes.
-                        </p>
-                        <p className="component-question">
-                            If you are interested, we have three optional questions to help us with Strategy. Are you
-                            willing to answer the optional questions?
-                        </p>
+                        <p>{information}</p>
+                        <p className="component-question">{question}</p>
                         <div className="button-grouper" style={{ marginBottom: '10px' }}>
                             <button className="button" onClick={this.handleClick} value="Yes">
-                                Yes
+                                {yes}
                             </button>
                             <button className="button" onClick={this.handleClick} value="No">
-                                No
+                                {no}
                             </button>
                         </div>
-                        <p>For more information visit:</p>
-                        <p>the main English language website of Esperanto Antaŭen at ea-mondo.org</p>
-                        <p>the website of the Canadian Esperanto Association esperanto.ca</p>
-                        <p>and/or the website of the World Esperanto Association uea.org</p>
+                        <div dangerouslySetInnerHTML={{ __html: more_info }} />
                     </div>
                 </div>
             );

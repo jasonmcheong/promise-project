@@ -31,22 +31,22 @@ class App extends React.Component {
                     <Header />
                     <div className="contain">
                         <Context.Consumer>
-                            {context => <ThankYouEnd />
-                            // this.state.questions.length > 0 ? (
-                            //     <>
-                            //         {context.userStarted === true && <Timer />}
-                            //         <CarouselView
-                            //             questions={this.state.questions}
-                            //             proceedToForm={this.state.proceedToForm}
-                            //             id={context.id}
-                            //             coordinates={context.coordinates}
-                            //             date={context.date}
-                            //             start={context.start}
-                            //         />
-                            //     </>
-                            // ) : (
-                            //     <Loading />
-                            // )
+                            {context =>
+                                this.state.questions.length > 0 ? (
+                                    <>
+                                        {context.userStarted === true && <Timer />}
+                                        <CarouselView
+                                            questions={this.state.questions}
+                                            proceedToForm={this.state.proceedToForm}
+                                            id={context.id}
+                                            coordinates={context.coordinates}
+                                            date={context.date}
+                                            start={context.start}
+                                        />
+                                    </>
+                                ) : (
+                                    <Loading />
+                                )
                             }
                         </Context.Consumer>
                     </div>
