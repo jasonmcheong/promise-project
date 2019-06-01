@@ -18,7 +18,7 @@ class ThankYouEnd extends React.Component {
     render() {
         const { title, info, button_text } = this.state.thankYouInfo;
 
-        return this.state.thankYouInfo ? (
+        return Object.getOwnPropertyNames(this.state.thankYouInfo).length !== 0 ? (
             <div className="Component">
                 <h2 className="component-title">{title}</h2>
                 <div className="component-container">

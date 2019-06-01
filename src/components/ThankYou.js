@@ -33,24 +33,28 @@ class ThankYou extends React.Component {
         if (this.state.userChoice === '') {
             const { title, information, question, yes, no, more_info } = this.state.proceedToQuestions;
 
-            return (
-                <div className="Component">
-                    <h2 className="component-title">{title}</h2>
-                    <div className="component-container">
-                        <p>{information}</p>
-                        <p className="component-question">{question}</p>
-                        <div className="button-grouper" style={{ marginBottom: '10px' }}>
-                            <button className="button" onClick={this.handleClick} value="Yes">
-                                {yes}
-                            </button>
-                            <button className="button" onClick={this.handleClick} value="No">
-                                {no}
-                            </button>
+            if (Object.getOwnPropertyNames(this.state.proceedToQuestions).length !== 0) {
+                return (
+                    <div className="Component">
+                        <h2 className="component-title">{title}</h2>
+                        <div className="component-container">
+                            <p>{information}</p>
+                            <p className="component-question">{question}</p>
+                            <div className="button-grouper" style={{ marginBottom: '10px' }}>
+                                <button className="button" onClick={this.handleClick} value="Yes">
+                                    {yes}
+                                </button>
+                                <button className="button" onClick={this.handleClick} value="No">
+                                    {no}
+                                </button>
+                            </div>
+                            <div dangerouslySetInnerHTML={{ __html: more_info }} />
                         </div>
-                        <div dangerouslySetInnerHTML={{ __html: more_info }} />
                     </div>
-                </div>
-            );
+                );
+            } else {
+                return <Loading />;
+            }
         } else if (this.state.userChoice === 'Yes') {
             return this.state.questionsAdditional.length > 0 ? (
                 <Context.Consumer>

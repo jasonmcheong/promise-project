@@ -112,10 +112,6 @@ class CarouselView extends React.Component {
             });
         }
 
-        // if (index === q.length) {
-        //     postToDatabase(this.state.userInput, this.props.id, this.props.coordinates, this.props.date);
-        // }
-
         if (q.length > 0) {
             return index < q.length ? (
                 <Carousel
@@ -133,7 +129,10 @@ class CarouselView extends React.Component {
                     {questionList}
                 </Carousel>
             ) : (
-                <ProceedToUserForm proceedToForm={this.state.proceedToForm} />
+                <>
+                    <ProceedToUserForm proceedToForm={this.state.proceedToForm} />
+                    {postToDatabase(this.state.userInput, this.props.id, this.props.coordinates, this.props.date)}
+                </>
             );
         } else {
             return <Loading />;
