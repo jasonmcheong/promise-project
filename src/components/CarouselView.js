@@ -2,7 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
 import ProceedToUserForm from './ProceedToUserForm';
+import { language } from '../utility/Language';
 import Dexie from 'dexie';
+import Loading from './Loading';
 
 const postToDatabase = (questions, id, coordinates, date) => {
     // If internet connection is present, send off to AWS
@@ -38,8 +40,23 @@ const postToDatabase = (questions, id, coordinates, date) => {
 
 class CarouselView extends React.Component {
     state = {
+        questions: [],
+        proceedToForm: {},
         index: 0,
         userInput: [],
+    };
+
+    componentDidMount = () => {
+        fetch(`https://ea-mondo.org/wp-json/wp/v2/promise_questions?slug=${language}`)
+            .then(res => res.json())
+            .then(data => {
+                data.map(res =>
+                    this.setState({
+                        questions: res.acf.promise_questions,
+                        proceedToForm: res.acf.proceed_to_form,
+                    })
+                );
+            });
     };
 
     componentDidUpdate() {
@@ -53,7 +70,7 @@ class CarouselView extends React.Component {
     }
 
     render() {
-        const questionList = this.props.questions.map(({ title, information, question, answers }) => {
+        const questionList = this.state.questions.map(({ title, information, question, answers }) => {
             const answerList = answers.map(({ answer }) => {
                 return (
                     <button
@@ -61,7 +78,7 @@ class CarouselView extends React.Component {
                         key={answer}
                         value={answer}
                         onClick={e =>
-                            this.state.index < this.props.questions.length &&
+                            this.state.index < this.state.questions.length &&
                             this.setState({
                                 index: index + 1,
                                 userInput: [...this.state.userInput, `${title} - ${e.target.value}`],
@@ -76,7 +93,7 @@ class CarouselView extends React.Component {
             return (
                 <Carousel.Item key={title}>
                     <h2 className="component-title">
-                        {title} of {this.props.questions.length + 1}
+                        {title} / {this.state.questions.length + 1}
                     </h2>
                     <div className="component-container">
                         <p>{information}</p>
@@ -90,7 +107,7 @@ class CarouselView extends React.Component {
         });
 
         const { index } = this.state;
-        const q = this.props.questions;
+        const q = this.state.questions;
 
         if (this.state.userInput.length === 1) {
             setTimeout(() => {
@@ -98,28 +115,31 @@ class CarouselView extends React.Component {
             });
         }
 
-        if (index === q.length) {
-            postToDatabase(this.state.userInput, this.props.id, this.props.coordinates, this.props.date);
+        if (q.length > 0) {
+            return index < q.length ? (
+                <Carousel
+                    activeIndex={index}
+                    controls={false}
+                    fade={true}
+                    indicators={false}
+                    interval={null}
+                    keyboard={false}
+                    onSelect={this.handleSelect}
+                    slide={false}
+                    wrap={false}
+                    className="Component"
+                >
+                    {questionList}
+                </Carousel>
+            ) : (
+                <>
+                    <ProceedToUserForm proceedToForm={this.state.proceedToForm} />
+                    {postToDatabase(this.state.userInput, this.props.id, this.props.coordinates, this.props.date)}
+                </>
+            );
+        } else {
+            return <Loading />;
         }
-
-        return index < q.length ? (
-            <Carousel
-                activeIndex={index}
-                controls={false}
-                fade={true}
-                indicators={false}
-                interval={null}
-                keyboard={false}
-                onSelect={this.handleSelect}
-                slide={false}
-                wrap={false}
-                className="Component"
-            >
-                {questionList}
-            </Carousel>
-        ) : (
-            <ProceedToUserForm proceedToForm={this.props.proceedToForm} />
-        );
     }
 }
 
