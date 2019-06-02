@@ -15,6 +15,11 @@ class Timer extends React.Component {
         this.setState({ timer: 300, showAlert: false });
     };
 
+    closeTimer = () => {
+        // Closes Alert component
+        this.setState({ showAlert: false });
+    };
+
     componentDidMount = () => {
         fetch(`https://ea-mondo.org/wp-json/wp/v2/alert?slug=${language}`)
             .then(res => res.json())
@@ -35,7 +40,12 @@ class Timer extends React.Component {
         return (
             <>
                 {this.state.showAlert && (
-                    <Alert time={this.state.timer} reset={this.resetTimer} alertInfo={this.state.alertInfo} />
+                    <Alert
+                        time={this.state.timer}
+                        reset={this.resetTimer}
+                        close={this.closeTimer}
+                        alertInfo={this.state.alertInfo}
+                    />
                 )}
             </>
         );
