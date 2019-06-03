@@ -71,7 +71,7 @@ class UserForm extends React.Component {
                     {!this.state.translate ? (
                         <label style={{ color: '#fff', fontSize: '1.3rem' }}>{translate_button}</label>
                     ) : (
-                        <label style={{ color: '#fff', fontSize: '1.3rem' }}>Traduku al la Angla</label>
+                        <label style={{ color: '#fff', fontSize: '1.3rem' }}>Traduku reen</label>
                     )}
                 </div>
                 <p style={{ color: '#fff', fontSize: '1.3rem', marginBottom: '3.5rem' }}>
