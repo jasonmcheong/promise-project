@@ -1,3 +1,3 @@
-let language = 'spanish';
+let language = 'espanol';
 
 export { language };
