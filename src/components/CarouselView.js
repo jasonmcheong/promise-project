@@ -9,19 +9,17 @@ import Loading from './Loading';
 const postToDatabase = (questions, id, coordinates, date) => {
     // If internet connection is present, send off to AWS
     axios
-        .post(
-            'https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions',
-            {
-                id,
-                coordinates,
-                date,
-                questions,
-            },
-        )
-        .then((res) => console.log(res))
+        .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions', {
+            id,
+            coordinates,
+            date,
+            questions,
+            language,
+        })
+        .then(res => console.log(res))
 
         // If there is no internet connection, add data to IndexedDB
-        .catch((err) => {
+        .catch(err => {
             var db = new Dexie('questionsDB');
 
             db.version(1).stores({
@@ -35,7 +33,7 @@ const postToDatabase = (questions, id, coordinates, date) => {
                     date: date,
                     questions: questions,
                 })
-                .catch((err) => {
+                .catch(err => {
                     alert(`Error: ${err.stack || err}`);
                 });
         });
@@ -50,16 +48,14 @@ class CarouselView extends React.Component {
     };
 
     componentDidMount = () => {
-        fetch(
-            `https://ea-mondo.org/wp-json/wp/v2/promise_questions?slug=${language}`,
-        )
-            .then((res) => res.json())
-            .then((data) => {
-                data.map((res) =>
+        fetch(`https://ea-mondo.org/wp-json/wp/v2/promise_questions?slug=${language}`)
+            .then(res => res.json())
+            .then(data => {
+                data.map(res =>
                     this.setState({
                         questions: res.acf.promise_questions,
                         proceedToForm: res.acf.proceed_to_form,
-                    }),
+                    })
                 );
             });
     };
@@ -75,48 +71,41 @@ class CarouselView extends React.Component {
     }
 
     render() {
-        const questionList = this.state.questions.map(
-            ({ title, information, question, answers }) => {
-                const answerList = answers.map(({ answer }) => {
-                    return (
-                        <button
-                            className="button"
-                            key={answer}
-                            value={answer}
-                            onClick={(e) =>
-                                this.state.index <
-                                    this.state.questions.length &&
-                                this.setState({
-                                    index: index + 1,
-                                    userInput: [
-                                        ...this.state.userInput,
-                                        `${title} - ${e.target.value}`,
-                                    ],
-                                })
-                            }>
-                            {answer}
-                        </button>
-                    );
-                });
-
+        const questionList = this.state.questions.map(({ title, information, question, answers }) => {
+            const answerList = answers.map(({ answer }) => {
                 return (
-                    <Carousel.Item key={title}>
-                        <h2 className="component-title">
-                            {title} / {this.state.questions.length + 1}
-                        </h2>
-                        <div className="component-container">
-                            <p>{information}</p>
-                            <div>
-                                <p className="component-question">{question}</p>
-                                <div className="button-grouper">
-                                    {answerList}
-                                </div>
-                            </div>
-                        </div>
-                    </Carousel.Item>
+                    <button
+                        className="button"
+                        key={answer}
+                        value={answer}
+                        onClick={e =>
+                            this.state.index < this.state.questions.length &&
+                            this.setState({
+                                index: index + 1,
+                                userInput: [...this.state.userInput, `${title} - ${e.target.value}`],
+                            })
+                        }
+                    >
+                        {answer}
+                    </button>
                 );
-            },
-        );
+            });
+
+            return (
+                <Carousel.Item key={title}>
+                    <h2 className="component-title">
+                        {title} / {this.state.questions.length + 1}
+                    </h2>
+                    <div className="component-container">
+                        <p>{information}</p>
+                        <div>
+                            <p className="component-question">{question}</p>
+                            <div className="button-grouper">{answerList}</div>
+                        </div>
+                    </div>
+                </Carousel.Item>
+            );
+        });
 
         const { index } = this.state;
         const q = this.state.questions;
@@ -139,20 +128,14 @@ class CarouselView extends React.Component {
                     onSelect={this.handleSelect}
                     slide={false}
                     wrap={false}
-                    className="Component">
+                    className="Component"
+                >
                     {questionList}
                 </Carousel>
             ) : (
                 <>
-                    <ProceedToUserForm
-                        proceedToForm={this.state.proceedToForm}
-                    />
-                    {postToDatabase(
-                        this.state.userInput,
-                        this.props.id,
-                        this.props.coordinates,
-                        this.props.date,
-                    )}
+                    <ProceedToUserForm proceedToForm={this.state.proceedToForm} />
+                    {postToDatabase(this.state.userInput, this.props.id, this.props.coordinates, this.props.date)}
                 </>
             );
         } else {

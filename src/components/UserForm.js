@@ -1,5 +1,6 @@
 import React from 'react';
 import ThankYou from './ThankYou';
+import { language } from '../utility/Language';
 import axios from 'axios';
 
 class UserForm extends React.Component {
@@ -34,6 +35,7 @@ class UserForm extends React.Component {
                     country: this.state.country,
                     newsletter: this.state.newsletter,
                 },
+                language,
             })
             .then(res => console.log(res))
             .catch(err => console.log(err));
