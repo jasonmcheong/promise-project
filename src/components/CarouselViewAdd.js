@@ -2,9 +2,11 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import ThankYouEnd from './ThankYouEnd';
 import { language } from '../utility/Language';
+import Dexie from 'dexie';
 import axios from 'axios';
 
 const postToDatabase = (questions, id, coordinates, date) => {
+    // If internet connection is present, send off to AWS
     axios
         .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions-additional', {
             id,
@@ -14,7 +16,27 @@ const postToDatabase = (questions, id, coordinates, date) => {
             language,
         })
         .then(res => console.log(res))
-        .catch(err => console.log(err));
+
+        // If there is no internet connection, add data to IndexedDB
+        .catch(err => {
+            var db = new Dexie('questionsAdditionalDB');
+
+            db.version(1).stores({
+                data: 'id, coordinates, date, questions, language',
+            });
+
+            db.data
+                .add({
+                    id: id,
+                    coordinates: coordinates,
+                    date: date,
+                    questions: questions,
+                    language: language,
+                })
+                .catch(err => {
+                    alert(`Error: ${err.stack || err}`);
+                });
+        });
 };
 
 class CarouselViewAdd extends React.Component {

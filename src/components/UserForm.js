@@ -1,6 +1,7 @@
 import React from 'react';
 import ThankYou from './ThankYou';
 import { language } from '../utility/Language';
+import Dexie from 'dexie';
 import axios from 'axios';
 
 class UserForm extends React.Component {
@@ -23,6 +24,8 @@ class UserForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.setState({ submitted: true });
+
+        // If internet connection is present, send off to AWS
         axios
             .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/form', {
                 id: this.props.id,
@@ -38,7 +41,33 @@ class UserForm extends React.Component {
                 language,
             })
             .then(res => console.log(res))
-            .catch(err => console.log(err));
+
+            // If there is no internet connection, add data to IndexedDB
+            .catch(err => {
+                var db = new Dexie('formDB');
+
+                db.version(1).stores({
+                    data: 'id, coordinates, date, form, language',
+                });
+
+                db.data
+                    .add({
+                        id: this.props.id,
+                        coordinates: this.props.coordinates,
+                        date: this.props.date,
+                        form: {
+                            name: this.state.name,
+                            email: this.state.email || 'none',
+                            phone: this.state.phone || 'none',
+                            country: this.state.country,
+                            newsletter: this.state.newsletter,
+                        },
+                        language,
+                    })
+                    .catch(err => {
+                        alert(`Error: ${err.stack || err}`);
+                    });
+            });
     };
 
     render() {

@@ -1,3 +1,5 @@
+// Send all offline data inside here this function?
+
 function sendQuestions() {
     return new Promise(function(resolve, reject) {
         var db = indexedDB.open('questionsDB');
@@ -33,21 +35,18 @@ function sendQuestions() {
     });
 }
 
-/* TODO: Figure out why sync is not sending data when going back online;
- *       have to manually sync data from service worker in google chrome dev tools
- */
 self.addEventListener('sync', function(e) {
     e.waitUntil(
         sendQuestions()
             .then(() => {
-                var db = (indexedDB.open('questionsDB').onsuccess = function(e) {
+                indexedDB.open('questionsDB').onsuccess = function(e) {
                     this.result
                         .transaction('data', 'readwrite')
                         .objectStore('data')
                         .clear().onsuccess = function(e) {
                         console.log('data cleared');
                     };
-                });
+                };
             })
             .catch(err => {
                 throw err;

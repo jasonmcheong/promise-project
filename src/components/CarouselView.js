@@ -23,7 +23,7 @@ const postToDatabase = (questions, id, coordinates, date) => {
             var db = new Dexie('questionsDB');
 
             db.version(1).stores({
-                data: 'id, coordinates, date, questions',
+                data: 'id, coordinates, date, questions, language',
             });
 
             db.data
@@ -32,6 +32,7 @@ const postToDatabase = (questions, id, coordinates, date) => {
                     coordinates: coordinates,
                     date: date,
                     questions: questions,
+                    language: language,
                 })
                 .catch(err => {
                     alert(`Error: ${err.stack || err}`);
