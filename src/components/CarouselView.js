@@ -14,6 +14,7 @@ const postToDatabase = (questions, id, coordinates, date) => {
             coordinates,
             date,
             questions,
+            language,
         })
         .then(res => console.log(res))
 
