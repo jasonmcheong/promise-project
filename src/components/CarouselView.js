@@ -14,6 +14,7 @@ const postToDatabase = (questions, id, coordinates, date) => {
             coordinates,
             date,
             questions,
+            language,
         })
         .then(res => console.log(res))
 
@@ -31,6 +32,7 @@ const postToDatabase = (questions, id, coordinates, date) => {
                     coordinates: coordinates,
                     date: date,
                     questions: questions,
+                    language: language,
                 })
                 .catch(err => {
                     alert(`Error: ${err.stack || err}`);

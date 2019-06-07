@@ -1,6 +1,7 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import ThankYouEnd from './ThankYouEnd';
+import { language } from '../utility/Language';
 import axios from 'axios';
 
 const postToDatabase = (questions, id, coordinates, date) => {
@@ -10,6 +11,7 @@ const postToDatabase = (questions, id, coordinates, date) => {
             coordinates,
             date,
             questions,
+            language,
         })
         .then(res => console.log(res))
         .catch(err => console.log(err));
