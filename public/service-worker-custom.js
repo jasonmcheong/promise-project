@@ -1,58 +1,42 @@
-// Send all offline data inside here this function?
+/*
+ **  TODO: Send the Form and QuestionsAdditional data to AWS when connectivity returns
+ */
 
 function sendQuestions() {
-    return new Promise(function(resolve, reject) {
-        var db = indexedDB.open('questionsDB');
+    var db = indexedDB.open('questionsDB');
 
-        db.onsuccess = function(event) {
-            this.result
-                .transaction('data', 'readwrite')
-                .objectStore('data')
-                .getAll().onsuccess = function(event) {
-                event.target.result.forEach(res => {
-                    fetch('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            id: res.id,
-                            coordinates: res.coordinates,
-                            date: res.date,
-                            questions: res.questions,
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                        .then(response => console.log(response))
-                        .then(() => resolve())
-                        .catch(err => reject(err));
-                });
-            };
+    // When a connection is present, POST questionsDB data to AWS
+    db.onsuccess = function(event) {
+        this.result
+            .transaction('data', 'readwrite')
+            .objectStore('data')
+            .getAll().onsuccess = function(event) {
+            event.target.result.forEach(res => {
+                fetch('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        id: res.id,
+                        coordinates: res.coordinates,
+                        date: res.date,
+                        questions: res.questions,
+                        language: res.language,
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => console.log(response))
+                    .catch(err => {
+                        throw err;
+                    });
+            });
         };
+    };
 
-        db.onerror = function(err) {
-            reject(err);
-        };
-    });
+    db.onerror = function(err) {
+        throw err;
+    };
 }
-
-self.addEventListener('sync', function(e) {
-    e.waitUntil(
-        sendQuestions()
-            .then(() => {
-                indexedDB.open('questionsDB').onsuccess = function(e) {
-                    this.result
-                        .transaction('data', 'readwrite')
-                        .objectStore('data')
-                        .clear().onsuccess = function(e) {
-                        console.log('data cleared');
-                    };
-                };
-            })
-            .catch(err => {
-                throw err;
-            })
-    );
-});
 
 // Service Worker
 const cacheName = 'v1';
@@ -99,4 +83,12 @@ self.addEventListener('fetch', e => {
             })
             .catch(err => caches.match(e.request).then(res => res))
     );
+});
+
+// Call Sync Event
+self.addEventListener('sync', function(e) {
+    console.log('Now Online');
+    if (e.tag === 'sendQuestions') {
+        e.waitUntil(sendQuestions());
+    }
 });
