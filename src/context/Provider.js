@@ -1,3 +1,7 @@
+/*
+ ** TODO: Include a fallback for the date the promise was completed when user goes offline
+ */
+
 import React from 'react';
 import Context from './Context';
 const uuidv4 = require('uuid/v4');

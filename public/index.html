@@ -43,10 +43,23 @@
 
                     navigator.serviceWorker.ready
                         .then(function(registration) {
-                            console.log('Service Worker Ready');
+                            console.log('Ready - sendQuestions Sync');
                             return registration.sync.register('sendQuestions');
                         })
-                        .then(() => console.log('Sync Event Registered'))
+                        .catch(err => console.log('Sync Registration Failed'));
+
+                    navigator.serviceWorker.ready
+                        .then(function(registration) {
+                            console.log('Ready - sendForm Sync');
+                            return registration.sync.register('sendForm');
+                        })
+                        .catch(err => console.log('Sync Registration Failed'));
+
+                    navigator.serviceWorker.ready
+                        .then(function(registration) {
+                            console.log('Ready - sendQuestionsAdditional Sync');
+                            return registration.sync.register('sendQuestionsAdditional');
+                        })
                         .catch(err => console.log('Sync Registration Failed'));
                 });
             } else {

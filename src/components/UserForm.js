@@ -1,3 +1,7 @@
+/*
+ ** NOTE: A newly created IndexedDB-DB version is 0.1
+ */
+
 import React from 'react';
 import ThankYou from './ThankYou';
 import { language } from '../utility/Language';
@@ -46,7 +50,7 @@ class UserForm extends React.Component {
             .catch(err => {
                 var db = new Dexie('formDB');
 
-                db.version(1).stores({
+                db.version(0.1).stores({
                     data: 'id, coordinates, date, form, language',
                 });
 

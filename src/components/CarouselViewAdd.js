@@ -1,3 +1,7 @@
+/*
+ ** NOTE: A newly created IndexedDB-DB version is 0.1
+ */
+
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import ThankYouEnd from './ThankYouEnd';
@@ -21,7 +25,7 @@ const postToDatabase = (questions, id, coordinates, date) => {
         .catch(err => {
             var db = new Dexie('questionsAdditionalDB');
 
-            db.version(1).stores({
+            db.version(0.1).stores({
                 data: 'id, coordinates, date, questions, language',
             });
 
