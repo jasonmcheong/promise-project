@@ -1,7 +1,3 @@
-/*
- ** TODO: Clear the data from IDB database when response gets sent
- */
-
 function clearData(db, id) {
     var transaction = db.transaction(['data'], 'readwrite');
 
