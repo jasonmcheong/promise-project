@@ -2,6 +2,25 @@
  ** TODO: Clear the data from IDB database when response gets sent
  */
 
+function clearData(db, id) {
+    var transaction = db.transaction(['data'], 'readwrite');
+
+    transaction.oncomplete = function(event) {
+        console.log('transaction completed');
+    };
+
+    transaction.onerror = function(event) {
+        console.log(`Transaction not opened due to error: ${transaction.error}`);
+    };
+
+    var objectStore = transaction.objectStore('data');
+    var objectStoreRequest = objectStore.delete(id);
+
+    objectStoreRequest.onsuccess = function(event) {
+        console.log(`Deleted: ${id}`);
+    };
+}
+
 /*
  ** Attempting to clear the data in sendQuestions currently
  */
@@ -21,6 +40,8 @@ function sendQuestions() {
 
     // When a connection is present, POST questionsDB data to AWS
     db.onsuccess = function(event) {
+        let db = event.target.result;
+
         this.result
             .transaction('data', 'readwrite')
             .objectStore('data')
@@ -39,7 +60,7 @@ function sendQuestions() {
                         'Content-Type': 'application/json',
                     },
                 })
-                    .then(response => console.log(response))
+                    .then(() => clearData(db, res.id))
                     .catch(err => {
                         throw err;
                     });
@@ -68,6 +89,8 @@ function sendForm() {
 
     // When a connection is present, POST questionsDB data to AWS
     db.onsuccess = function(event) {
+        let db = event.target.result;
+
         this.result
             .transaction('data', 'readwrite')
             .objectStore('data')
@@ -86,7 +109,7 @@ function sendForm() {
                         'Content-Type': 'application/json',
                     },
                 })
-                    .then(response => console.log(response))
+                    .then(() => clearData(db, res.id))
                     .catch(err => {
                         throw err;
                     });
@@ -115,6 +138,8 @@ function sendQuestionsAdditional() {
 
     // When a connection is present, POST questionsDB data to AWS
     db.onsuccess = function(event) {
+        let db = event.target.result;
+
         this.result
             .transaction('data', 'readwrite')
             .objectStore('data')
@@ -133,7 +158,7 @@ function sendQuestionsAdditional() {
                         'Content-Type': 'application/json',
                     },
                 })
-                    .then(response => console.log(response))
+                    .then(() => clearData(db, res.id))
                     .catch(err => {
                         throw err;
                     });
