@@ -17,9 +17,6 @@ function clearData(db, id) {
     };
 }
 
-/*
- ** Attempting to clear the data in sendQuestions currently
- */
 function sendQuestions() {
     var db = indexedDB.open('questionsDB', 1);
 
