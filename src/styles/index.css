@@ -62,7 +62,7 @@ header form {
 }
 
 .Component {
-    font-size: 1.2rem;
+    font-size: 1.375rem;
     width: 680px;
     margin: 0 auto;
     border-radius: 5px;
@@ -93,7 +93,7 @@ header form {
 
 .button {
     font-family: 'Muli', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.375rem;
     width: 100%;
     color: #fff;
     background: #067a08;

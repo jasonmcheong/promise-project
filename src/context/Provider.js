@@ -11,9 +11,11 @@ class Provider extends React.Component {
         userStarted: false,
     };
 
-    componentWillMount = () => {
+    userStarted = () => {
+        this.setState({ userStarted: true });
+
         navigator.geolocation.getCurrentPosition(
-            location => {
+            (location) => {
                 // Getting coordinates
                 let latitude = location.coords.latitude;
                 let longitude = location.coords.longitude;
@@ -29,9 +31,12 @@ class Provider extends React.Component {
                 let finalDate = `${dateFormatted} (${timezone})`;
 
                 // Assigning them into state
-                this.setState({ coordinates: `${latitude}, ${longitude}`, date: finalDate });
+                this.setState({
+                    coordinates: `${latitude}, ${longitude}`,
+                    date: finalDate,
+                });
             },
-            err => {
+            (err) => {
                 // Setting the date as a fallback when location cannot be retrieved
                 let date = new Date();
                 let timezone = date
@@ -44,12 +49,8 @@ class Provider extends React.Component {
 
                 this.setState({ date: finalDate });
             },
-            { enableHighAccuracy: true }
+            { enableHighAccuracy: true },
         );
-    };
-
-    userStarted = () => {
-        this.setState({ userStarted: true });
     };
 
     render() {
@@ -61,8 +62,7 @@ class Provider extends React.Component {
                     date: this.state.date,
                     start: this.userStarted,
                     userStarted: this.state.userStarted,
-                }}
-            >
+                }}>
                 {this.props.children}
             </Context.Provider>
         );

@@ -8,9 +8,9 @@ class ChooseLanguage extends React.Component {
 
     componentWillMount = () => {
         fetch(`https://ea-mondo.org/wp-json/wp/v2/promise_questions`)
-            .then(res => res.json())
-            .then(data => {
-                data.map(res => {
+            .then((res) => res.json())
+            .then((data) => {
+                data.map((res) => {
                     this.setState({
                         languages: [...this.state.languages, res],
                     });
@@ -19,19 +19,18 @@ class ChooseLanguage extends React.Component {
     };
 
     render() {
-        const languages = this.state.languages.map(language => {
+        const languages = this.state.languages.map((language) => {
             const { id, slug, title } = language;
             return (
                 <button
                     key={id}
                     className="button"
-                    style={{ fontSize: '1.3rem' }}
+                    style={{ fontSize: '1.5rem' }}
                     value={slug}
-                    onClick={e => {
+                    onClick={(e) => {
                         setLanguage(e.target.value);
                         this.props.languageSelect();
-                    }}
-                >
+                    }}>
                     {title.rendered}
                 </button>
             );

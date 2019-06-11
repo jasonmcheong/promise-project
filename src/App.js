@@ -24,7 +24,7 @@ class App extends React.Component {
                     <Context.Consumer>
                         {(context) => (
                             <>
-                                {context.userStarted === true && <Timer />}
+                                {context.userStarted && <Timer />}
                                 <CarouselView
                                     id={context.id}
                                     coordinates={context.coordinates}
