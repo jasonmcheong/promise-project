@@ -2,6 +2,7 @@
     font-family: 'Muli', sans-serif;
     background: #444;
     min-height: 100vh;
+    padding: 0 1rem;
 }
 
 .toggle {

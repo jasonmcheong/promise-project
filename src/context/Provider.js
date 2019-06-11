@@ -31,7 +31,19 @@ class Provider extends React.Component {
                 // Assigning them into state
                 this.setState({ coordinates: `${latitude}, ${longitude}`, date: finalDate });
             },
-            err => window.alert('Please enable GPS position features'),
+            err => {
+                // Setting the date as a fallback when location cannot be retrieved
+                let date = new Date();
+                let timezone = date
+                    .toString()
+                    .split('(')
+                    .pop()
+                    .split(')')[0];
+                let dateFormatted = moment().format('YYYYMMDD - HH:mm');
+                let finalDate = `${dateFormatted} (${timezone})`;
+
+                this.setState({ date: finalDate });
+            },
             { enableHighAccuracy: true }
         );
     };
