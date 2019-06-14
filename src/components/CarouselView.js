@@ -1,64 +1,37 @@
 import React from 'react';
 import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
-import ProceedToUserForm from './ProceedToUserForm';
-import { language } from '../utility/Language';
-import Dexie from 'dexie';
 import Loading from './Loading';
 
 const postToDatabase = (questions, id, coordinates, date) => {
     // If internet connection is present, send off to AWS
     axios
-        .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/questions', {
+        .post('https://ldljqdsel3.execute-api.us-west-2.amazonaws.com/v1/ea-centro', {
             id,
             coordinates,
             date,
             questions,
-            language,
         })
         .then(res => console.log(res))
-
-        // If there is no internet connection, add data to IndexedDB
-        .catch(err => {
-            var db = new Dexie('questionsDB');
-
-            db.version(1).stores({
-                data: 'id, coordinates, date, questions',
-            });
-
-            db.data
-                .add({
-                    id: id,
-                    coordinates: coordinates,
-                    date: date,
-                    questions: questions,
-                    language: language,
-                })
-                .catch(err => {
-                    alert(`Error: ${err.stack || err}`);
-                });
-        });
+        .then(() => window.location.reload())
+        .catch(err => console.log(err));
 };
 
 class CarouselView extends React.Component {
     state = {
         questions: [],
-        proceedToForm: {},
         index: 0,
         userInput: [],
     };
 
     componentDidMount = () => {
-        fetch(`https://ea-mondo.org/wp-json/wp/v2/promise_questions?slug=${language}`)
+        fetch(`http://ea-centro.org/wp-json/wp/v2/esperanto_questions`)
             .then(res => res.json())
-            .then(data => {
-                data.map(res =>
-                    this.setState({
-                        questions: res.acf.promise_questions,
-                        proceedToForm: res.acf.proceed_to_form,
-                    })
-                );
-            });
+            .then(data =>
+                data.map(response => {
+                    this.setState({ questions: response.acf.questions });
+                })
+            );
     };
 
     componentDidUpdate() {
@@ -95,7 +68,7 @@ class CarouselView extends React.Component {
             return (
                 <Carousel.Item key={title}>
                     <h2 className="component-title">
-                        {title} / {this.state.questions.length + 1}
+                        {title} / {this.state.questions.length}
                     </h2>
                     <div className="component-container">
                         <p>{information}</p>
@@ -118,27 +91,31 @@ class CarouselView extends React.Component {
         }
 
         if (q.length > 0) {
-            return index < q.length ? (
-                <Carousel
-                    activeIndex={index}
-                    controls={false}
-                    fade={true}
-                    indicators={false}
-                    interval={null}
-                    keyboard={false}
-                    onSelect={this.handleSelect}
-                    slide={false}
-                    wrap={false}
-                    className="Component"
-                >
-                    {questionList}
-                </Carousel>
-            ) : (
-                <>
-                    <ProceedToUserForm proceedToForm={this.state.proceedToForm} />
-                    {postToDatabase(this.state.userInput, this.props.id, this.props.coordinates, this.props.date)}
-                </>
-            );
+            if (index === q.length) {
+                return (
+                    <>
+                        <Loading />
+                        {postToDatabase(this.state.userInput, this.props.id, this.props.coordinates, this.props.date)}
+                    </>
+                );
+            } else {
+                return (
+                    <Carousel
+                        activeIndex={index}
+                        controls={false}
+                        fade={true}
+                        indicators={false}
+                        interval={null}
+                        keyboard={false}
+                        onSelect={this.handleSelect}
+                        slide={false}
+                        wrap={false}
+                        className="Component"
+                    >
+                        {questionList}
+                    </Carousel>
+                );
+            }
         } else {
             return <Loading />;
         }

@@ -8,12 +8,9 @@ class Provider extends React.Component {
         id: uuidv4(),
         coordinates: 'unavailable',
         date: 'unavailable',
-        userStarted: false,
     };
 
     userStarted = () => {
-        this.setState({ userStarted: true });
-
         navigator.geolocation.getCurrentPosition(
             location => {
                 // Getting coordinates
@@ -61,7 +58,6 @@ class Provider extends React.Component {
                     coordinates: this.state.coordinates,
                     date: this.state.date,
                     start: this.userStarted,
-                    userStarted: this.state.userStarted,
                 }}
             >
                 {this.props.children}
