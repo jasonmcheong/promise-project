@@ -25,7 +25,7 @@ class CarouselView extends React.Component {
     };
 
     componentDidMount = () => {
-        fetch(`http://ea-centro.org/wp-json/wp/v2/esperanto_questions`)
+        fetch(`https://ea-centro.org/wp-json/wp/v2/esperanto_questions`)
             .then(res => res.json())
             .then(data =>
                 data.map(response => {
