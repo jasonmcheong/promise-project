@@ -1,9 +1,11 @@
 import React from 'react';
-import { setLanguage } from '../utility/Language';
+import OtherLanguages from './OtherLanguages';
+import MainLanguages from './MainLanguages';
 
 class ChooseLanguage extends React.Component {
     state = {
         languages: [],
+        viewOtherLanguages: false,
     };
 
     componentWillMount = () => {
@@ -19,43 +21,19 @@ class ChooseLanguage extends React.Component {
     };
 
     render() {
-        // Filtering for the top languages in the world
-        const filter = this.state.languages.filter(language => language.acf.top_language === true);
-
-        // Sorting the languages in alphabetical order
-        const sort = filter.sort((a, b) => {
-            if (a.title.rendered < b.title.rendered) {
-                return -1;
-            }
-            if (a.title.rendered > b.title.rendered) {
-                return 1;
-            }
-            return 0;
-        });
-
-        // Displaying the languages
-        const languages = sort.map(language => {
-            const { id, slug, title } = language;
-
-            return (
-                <button
-                    key={id}
-                    className="button"
-                    style={{ fontSize: '1.5rem' }}
-                    value={slug}
-                    onClick={e => {
-                        setLanguage(e.target.value);
-                        this.props.languageSelect();
-                    }}
-                >
-                    {title.rendered}
-                </button>
-            );
-        });
-
         return (
-            <div className="languages">
-                <div className="lang-grid">{languages}</div>
+            <div className="choose">
+                <div className="translate">
+                    <i
+                        class="far fa-plus-square"
+                        onClick={e => this.setState({ viewOtherLanguages: !this.state.viewOtherLanguages })}
+                    />
+                </div>
+                {!this.state.viewOtherLanguages ? (
+                    <MainLanguages languages={this.state.languages} languageSelect={this.props.languageSelect} />
+                ) : (
+                    <OtherLanguages languages={this.state.languages} languageSelect={this.props.languageSelect} />
+                )}
             </div>
         );
     }
