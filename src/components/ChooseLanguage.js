@@ -25,7 +25,7 @@ class ChooseLanguage extends React.Component {
             <div className="choose">
                 <div className="translate">
                     <i
-                        class="far fa-plus-square"
+                        className="far fa-plus-square"
                         onClick={e => this.setState({ viewOtherLanguages: !this.state.viewOtherLanguages })}
                     />
                 </div>
