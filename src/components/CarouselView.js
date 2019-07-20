@@ -112,9 +112,7 @@ class CarouselView extends React.Component {
         const q = this.state.questions;
 
         if (this.state.userInput.length === 1) {
-            setTimeout(() => {
-                this.props.start();
-            });
+            this.props.start();
         }
 
         if (q.length > 0) {
